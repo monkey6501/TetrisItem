@@ -8,6 +8,8 @@ class PlayerInfoManager extends egret.EventDispatcher {
 		return PlayerInfoManager._instance;
 	}
 
+	public playerInfo: PlayerInfo;
+
 	public constructor() {
 		super()
 	}
