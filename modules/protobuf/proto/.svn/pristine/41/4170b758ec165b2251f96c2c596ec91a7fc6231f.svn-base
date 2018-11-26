@@ -1,0 +1,31 @@
+package protocol;
+option java_package = "com.game.protobuf";
+option java_outer_classname = "ShareProtoMsg";
+
+// 分享类型
+enum ShareType {
+	SHARE_SHARE = 1; //分享类型
+	SHARE_COLLECT = 2; //收藏类型
+}
+
+//登录消息多条分享或收藏：959=====> 服务器推送分享消息
+message ShareListMsg {
+	repeated ShareMsg list = 1;//数据
+}
+
+//单条分享或收藏：960=====> 服务器推送分享消息
+message ShareMsg {
+	required ShareType shareType = 1; //分享类型
+	required bool shareState = 2;// 是否已分享
+	required bool shareAward = 3; // 是否已领奖
+}
+
+// 分享或收藏成功 ：1000   <===客户端请求
+message ShareOperateMsg {
+	required ShareType type = 1;// 类型
+}
+
+// 分享或收藏领奖 ：1001   <===客户端请求
+message ShareAwardMsg {
+	required ShareType type = 1;// 类型
+}
