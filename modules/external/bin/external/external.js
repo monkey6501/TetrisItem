@@ -46,10 +46,6 @@ function loadServerConfig(callback) {
 	xhr.send(null);
 }
 
-function setCenterUrl(url) {
-	centerUrl = url;
-}
-
 function newRequest(url, callback, cache) {
 	var r = Date.now() + "" + (Math.floor(Math.random() * 100000));
 	var xhrReq = new XMLHttpRequest();
@@ -66,32 +62,17 @@ function newRequest(url, callback, cache) {
 
 var ext = (function () {
 	var external = {};
-	external.getIsIos = function () { return isIos };
 	external.getPlatform = function () { return platform };
-	external.getIsShowAdv = function () { return isShowAdv };
-	external.getIsSelectHead = function () { return isSelectHead };
-	external.getIsEditNickName = function () { return isEditNickName };
-	external.getIsSkipLogoPage = function () { return isSkipLogoPage };
-	external.getIsLog = function () { return isLog };
 	external.getCenterUrl = function () { return centerUrl };
 	external.getServerListUrl = function () { return serverListUrl };
 	external.getResourceUrl = function () { return resourceUrl };
 	external.getGamePre = function () { return gamePre };
 	external.getPlayerId = function () { return playerId };
-	external.getRelease = function () { return release };
-	external.getHttpHead = function () { return httpHead };
-	external.getrankUrl = function () { return rankUrl };
+	external.getRankUrl = function () { return rankUrl };
 	external.getIsAD = function () { return isAD };
-	external.getParameters = function () { return null };
-	external.beginFBGameSence = function () { };
-	external.showFacebookAd = function (type, placementId, fromId, missioinId, param) { };
-	external.preloadingFBAdv = function (placementId) { };
-	external.JsFBGetFriends = function () { };
-	external.jsPopPayTips = function (score) { };
-	external.setCenterUrl = setCenterUrl
+	external.getIsDebug = function () { return isDebug };
 	external.newRequest = newRequest;
 	external.loadServerConfig = loadServerConfig;
-	external.getIsServerList = function () { return isServerList };
 	return external;
 })();
 window.ext = ext;

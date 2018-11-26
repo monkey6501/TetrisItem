@@ -174,7 +174,7 @@ var PathManager = (function () {
     Object.defineProperty(PathManager.prototype, "language_path", {
         get: function () {
             var self = this;
-            return self._resourceUrl + GameConfig.Language + "/config/language" + ".txt?v=" + Math.random();
+            return self._resourceUrl + "/config/language" + ".txt?v=" + Math.random();
         },
         enumerable: true,
         configurable: true
@@ -185,10 +185,9 @@ var PathManager = (function () {
             return [
                 //公共资源
                 self._resourceUrl + "config/" + "game_com.res.json?v=" + Math.random(),
-                self._resourceUrl + "config/" + "game_animation.res.json?v=" + Math.random(),
                 //对应国家的资源
-                self._resourceUrl + GameConfig.Language + "/config/" + "default.res.json?v=" + Math.random(),
-                self._resourceUrl + GameConfig.Language + "/config/" + "game_ui.res.json?v=" + Math.random(),
+                self._resourceUrl + "/config/" + "default.res.json?v=" + Math.random(),
+                self._resourceUrl + "/config/" + "game_ui.res.json?v=" + Math.random(),
             ];
         },
         enumerable: true,

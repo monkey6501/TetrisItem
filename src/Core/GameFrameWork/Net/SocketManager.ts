@@ -73,7 +73,7 @@ class SocketManager extends egret.EventDispatcher {
 		let self = this;
 		if (self._socket != null) {
 			self._socket.close();
-			ScenesManager.getInstance.openView(UIUtil.createAlert(ViewClassName.BrokenLineAlert), LayerManager.SCENE_POP_LAYER);
+			// ScenesManager.getInstance.openView(UIUtil.createAlert(ViewClassName.BrokenLineAlert), LayerManager.SCENE_POP_LAYER);
 		}
 	}
 

@@ -3,7 +3,6 @@ class ObjectUtils {
     }
     public static BASETYPES = ["boolean", "number", "string", "null"];
 
-    public static BIGNUMBERKEY = ["baseCost", "baseAttack", "baseLife"]
     /**
      * 拷贝数据
      * @param obj			需要赋值的对象
@@ -19,28 +18,6 @@ class ObjectUtils {
             }
             else {
                 this.copyValue(obj[key], value[key]);
-            }
-        }
-    }
-
-    /**
-     * 拷贝数据 ---- BIGNUMBERKEY 里面的数据特殊处理
-     * @param obj			需要赋值的对象
-     * @param value			拥有数据的对象
-     */
-    public static copyValue1(obj: Object, value: Object): void {
-        for (var key in value) {
-            var attrValue = value[key];
-            var attrType: string = egret.getQualifiedClassName(attrValue);
-            var baseType: boolean = this.isBaseType(value[key]);
-            if (ObjectUtils.BIGNUMBERKEY.indexOf(key) != -1) {
-                obj[key] = new BigNumber(value[key]);
-            }
-            else if (baseType) {
-                obj[key] = value[key];
-            }
-            else {
-                this.copyValue1(obj[key], value[key]);
             }
         }
     }

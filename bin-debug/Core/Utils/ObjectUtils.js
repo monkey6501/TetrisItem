@@ -23,27 +23,6 @@ var ObjectUtils = (function () {
         }
     };
     /**
-     * 拷贝数据 ---- BIGNUMBERKEY 里面的数据特殊处理
-     * @param obj			需要赋值的对象
-     * @param value			拥有数据的对象
-     */
-    ObjectUtils.copyValue1 = function (obj, value) {
-        for (var key in value) {
-            var attrValue = value[key];
-            var attrType = egret.getQualifiedClassName(attrValue);
-            var baseType = this.isBaseType(value[key]);
-            if (ObjectUtils.BIGNUMBERKEY.indexOf(key) != -1) {
-                obj[key] = new BigNumber(value[key]);
-            }
-            else if (baseType) {
-                obj[key] = value[key];
-            }
-            else {
-                this.copyValue1(obj[key], value[key]);
-            }
-        }
-    };
-    /**
      * 判断对象是否为基础类型
      * @param obj			对象
      * @return				true为基础类型，false为复杂类型
@@ -139,7 +118,6 @@ var ObjectUtils = (function () {
         }
     };
     ObjectUtils.BASETYPES = ["boolean", "number", "string", "null"];
-    ObjectUtils.BIGNUMBERKEY = ["baseCost", "baseAttack", "baseLife"];
     return ObjectUtils;
 }());
 __reflect(ObjectUtils.prototype, "ObjectUtils");

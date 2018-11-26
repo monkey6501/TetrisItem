@@ -35,12 +35,16 @@
       "path": "./modules/jszip/"
     },
     {
-      "name": "greensock",
-      "path": "./modules/greensock/"
+      "name": "external",
+      "path": "./modules/external"
     },
     {
-      "name": "gesture",
-      "path": "./modules/gesture/"
+      "name": "protobuf-library",
+      "path": "./modules/protobuf/library"
+    },
+    {
+      "name": "protobuf-bundles",
+      "path": "./modules/protobuf/bundles"
     }
   ]
 }

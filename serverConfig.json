@@ -2,13 +2,7 @@
     "serverConfig": {
         "configs": {
             "platform": "dev",
-            "serverListUrl": "https://quanwang.7road.net:3009/Center/oss/mixServerList/ClickHeroes/",
-            "iosServerListUrl": "https://quanwang.7road.net:3009/Center/oss/mixServerList/ClickHeroes/",
-            "gamePre": "/ClickHeroes/game/",
-            "resourceUrl": "resource/",
-			"rankUrl": "https://{0}/rank/{1}/OpenServerRank.xml",
-			"isAD": false,
-			"isServerList": true
+            "serverListUrl": "https://quanwang.7road.net:3009/Center/oss/mixServerList/ClickHeroes/"
         }
     }
 }

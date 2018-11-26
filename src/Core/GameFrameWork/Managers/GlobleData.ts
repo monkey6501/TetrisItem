@@ -19,74 +19,12 @@ class GlobleData extends egret.DisplayObject {
 	}
 
 	public static ServerConfigVO: string = "ServerConfig_json";
-	public static AchievementsVO: string = "Achievements_json";
-	public static HeroVO: string = "Heroes_json";
-	public static MonsterVO: string = "Monsters_json";
-	public static HeroSkillVO: string = "Skill_json";
-	public static BoneAnimationVO: string = "BoneAnimation_json";
-	public static LevelVO: string = "Level_json";
-	public static EquipVO: string = "Equip_json";
-	public static AncientVO: string = "Ancients_json";
-	public static ShopVO: string = "Shop_json";
-	public static MercenariesTaskVO: string = "MercenariesTask_json";
-	public static AncientsPriceVO: string = "AncientsPrice_json";
-	public static ZoneVO: string = "Zones_json";
-	public static MercenariesVO: string = "Mercenaries_json";
-	public static ItemVO: string = "Item_json";
-	public static ErrorCodeVO: string = "ErrorCode_json";
-	public static SkillVO: string = "Skill_json";
 	public static SoundVO: string = "Sound_json";
-	public static RoleSoundVO: string = "RoleSound_json";
-	public static SkinVO: string = "Skin_json";
-	public static SkinSkillVO: string = "SkinSkill_json";
-	public static ActivityVO: string = "Activity_json";
-	public static AwardVO: string = "Award_json";
-	public static ActivityAwardVO: string = "ActivityAward_json";
-	public static ShareVO: string = "Share_json";
-	public static ChargeVO: string = "Charge_json";
-	public static PrivilegeVO: string = "Privilege_json";
-	public static SystemOpenVO: string = "SystemOpen_json";
-	public static GuideVO: string = "Guide_json";
-	public static PlayerNameVO: string = "PlayerName_json";
-	public static StrongerVO: string = "Stronger_json";
-	public static ColorWordVO: string = "ColorWord_json";
-	public static TaskVO: string = "Task_json";
+	public static BoneAnimationVO: string = "BoneAnimation_json";
 
 	private initModel(): void {
 		let self = this;
 		self._totalStepCsvList.Add(GlobleData.ServerConfigVO, ServerConfigVO);
-		self._totalStepCsvList.Add(GlobleData.AchievementsVO, AchievementsVO);
-		self._totalStepCsvList.Add(GlobleData.HeroVO, HeroVO);
-		self._totalStepCsvList.Add(GlobleData.MonsterVO, MonsterVO);
-		self._totalStepCsvList.Add(GlobleData.BoneAnimationVO, BoneAnimationVO);
-		self._totalStepCsvList.Add(GlobleData.LevelVO, LevelVO);
-		self._totalStepCsvList.Add(GlobleData.HeroSkillVO, HeroSkillVO);
-		self._totalStepCsvList.Add(GlobleData.EquipVO, EquipVO);
-		self._totalStepCsvList.Add(GlobleData.AncientVO, AncientVO);
-		self._totalStepCsvList.Add(GlobleData.ShopVO, ShopVO);
-		self._totalStepCsvList.Add(GlobleData.MercenariesTaskVO, MercenariesTaskVO);
-		self._totalStepCsvList.Add(GlobleData.AncientsPriceVO, AncientsPriceVO);
-		self._totalStepCsvList.Add(GlobleData.ZoneVO, ZoneVO);
-		self._totalStepCsvList.Add(GlobleData.MercenariesVO, MercenariesVO);
-		self._totalStepCsvList.Add(GlobleData.ItemVO, ItemVO);
-		self._totalStepCsvList.Add(GlobleData.ErrorCodeVO, ErrorCodeVO);
-		self._totalStepCsvList.Add(GlobleData.SkillVO, SkillVO);
-		self._totalStepCsvList.Add(GlobleData.SoundVO, SoundVO);
-		self._totalStepCsvList.Add(GlobleData.RoleSoundVO, RoleSoundVO);
-		self._totalStepCsvList.Add(GlobleData.SkinVO, SkinVO);
-		self._totalStepCsvList.Add(GlobleData.SkinSkillVO, SkinSkillVO);
-		self._totalStepCsvList.Add(GlobleData.ActivityVO, ActivityVO);
-		self._totalStepCsvList.Add(GlobleData.AwardVO, AwardVO);
-		self._totalStepCsvList.Add(GlobleData.ActivityAwardVO, ActivityAwardVO);
-		self._totalStepCsvList.Add(GlobleData.ShareVO, ShareVO);
-		self._totalStepCsvList.Add(GlobleData.ChargeVO, ChargeVO);
-		self._totalStepCsvList.Add(GlobleData.PrivilegeVO, PrivilegeVO);
-		self._totalStepCsvList.Add(GlobleData.SystemOpenVO, SystemOpenVO);
-		self._totalStepCsvList.Add(GlobleData.GuideVO, GuideVO);
-		self._totalStepCsvList.Add(GlobleData.PlayerNameVO, PlayerNameVO);
-		self._totalStepCsvList.Add(GlobleData.StrongerVO, StrongerVO);
-		self._totalStepCsvList.Add(GlobleData.ColorWordVO, ColorWordVO);
-		self._totalStepCsvList.Add(GlobleData.TaskVO, TaskVO);
 	}
 
 	// 解析初始数据表
