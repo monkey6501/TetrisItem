@@ -1,6 +1,5 @@
 /** 
  * 登陆管理类
- * @author weiqiang.huang
  */
 class LoginManager {
 
@@ -11,7 +10,6 @@ class LoginManager {
 	public setup(): void {
 		let self = this;
 	}
-
 
 	private static _instance: LoginManager;
 	public static get getInstance(): LoginManager {

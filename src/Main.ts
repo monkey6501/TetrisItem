@@ -119,7 +119,7 @@ class Main extends eui.UILayer {
         }
         LoginManager.getInstance.setup();
         if (ext.getPlatform() == "dev") {
-            //ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.Login), LayerManager.GAME_MAP_LAYER, true);
+            ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.LoginView), LayerManager.GAME_MAP_LAYER, true);
         }
         else {
         }
