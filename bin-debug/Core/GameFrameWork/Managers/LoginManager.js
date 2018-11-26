@@ -3,7 +3,6 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 /**
  * 登陆管理类
- * @author weiqiang.huang
  */
 var LoginManager = (function () {
     function LoginManager() {

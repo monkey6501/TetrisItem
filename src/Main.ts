@@ -74,7 +74,8 @@ class Main extends eui.UILayer {
 
     private initPlatform() {
         let self = this;
-
+        PathManager.Instance.resourceUrl = ext.getResourceUrl();
+        self.loadConfigs();
     }
 
     /** 加载配置文件 */

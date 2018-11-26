@@ -4,6 +4,8 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var ViewClassName = (function () {
     function ViewClassName() {
     }
+    /** 登陆界面 */
+    ViewClassName.LoginView = LoginView;
     return ViewClassName;
 }());
 __reflect(ViewClassName.prototype, "ViewClassName");

@@ -21,7 +21,7 @@ class PathManager {
 
 	public get ThemePath(): string {
 		let self = this;
-		return self._resourceUrl + "config/" + "default.thm.json";
+		return self._resourceUrl + "default.thm.json";
 	}
 
 	public get MapBackgoundPath(): string {
@@ -117,11 +117,9 @@ class PathManager {
 	public get ConfigUrls(): string[] {
 		let self = this;
 		return [
-			//公共资源
+			self._resourceUrl + "default.res.json?v=" + Math.random(),
 			self._resourceUrl + "config/" + "game_com.res.json?v=" + Math.random(),
-			//对应国家的资源
-			self._resourceUrl + "/config/" + "default.res.json?v=" + Math.random(),
-			self._resourceUrl + "/config/" + "game_ui.res.json?v=" + Math.random(),
+			self._resourceUrl + "config/" + "game_ui.res.json?v=" + Math.random(),
 		];
 	}
 }

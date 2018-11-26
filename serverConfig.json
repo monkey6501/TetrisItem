@@ -2,7 +2,7 @@
     "serverConfig": {
         "configs": {
             "platform": "dev",
-            "serverListUrl": "https://quanwang.7road.net:3009/Center/oss/mixServerList/ClickHeroes/"
+            "resourceUrl": "resource/"
         }
     }
 }

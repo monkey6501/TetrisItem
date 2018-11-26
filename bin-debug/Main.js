@@ -116,6 +116,8 @@ var Main = (function (_super) {
     };
     Main.prototype.initPlatform = function () {
         var self = this;
+        PathManager.Instance.resourceUrl = ext.getResourceUrl();
+        self.loadConfigs();
     };
     /** 加载配置文件 */
     Main.prototype.loadConfigs = function () {
@@ -163,7 +165,7 @@ var Main = (function (_super) {
         }
         LoginManager.getInstance.setup();
         if (ext.getPlatform() == "dev") {
-            //ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.Login), LayerManager.GAME_MAP_LAYER, true);
+            ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.LoginView), LayerManager.GAME_MAP_LAYER, true);
         }
         else {
         }

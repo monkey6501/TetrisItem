@@ -15,11 +15,11 @@
 		"modules/protobuf/bundles/protobuf-bundles.js"
 	],
 	"game": [
-		"bin-debug/Core/GameFrameWork/base/BaseClass.js",
 		"bin-debug/Core/UIFrameWork/View/BaseView.js",
+		"bin-debug/Core/UIFrameWork/View/Scenes/BaseScene.js",
+		"bin-debug/Modules/Login/View/LoginView.js",
+		"bin-debug/Core/GameFrameWork/base/BaseClass.js",
 		"bin-debug/Core/Utils/TSDictionary.js",
-		"bin-debug/Core/GameFrameWork/Net/event/SocketEvents.js",
-		"bin-debug/ThemeAdapter.js",
 		"bin-debug/Center/PlayerInfo.js",
 		"bin-debug/Center/PlayerInfoManager.js",
 		"bin-debug/Core/App.js",
@@ -50,8 +50,8 @@
 		"bin-debug/Core/GameFrameWork/Net/data/PackageIn.js",
 		"bin-debug/Core/GameFrameWork/Net/data/PackageOut.js",
 		"bin-debug/Core/GameFrameWork/Net/event/SocketEventDispatcher.js",
+		"bin-debug/Core/GameFrameWork/Net/event/SocketEvents.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/Core/Tools/BigNumber.js",
 		"bin-debug/Core/UIFrameWork/Configs/SkinName.js",
 		"bin-debug/Core/UIFrameWork/Configs/ViewClassName.js",
 		"bin-debug/Core/UIFrameWork/Layer/DisplayLayer.js",
@@ -68,7 +68,7 @@
 		"bin-debug/Core/UIFrameWork/View/Items/ISimpleListItem.js",
 		"bin-debug/Core/UIFrameWork/View/Panels/BaseAlert.js",
 		"bin-debug/Core/UIFrameWork/View/Panels/BasePanel.js",
-		"bin-debug/Core/UIFrameWork/View/Scenes/BaseScene.js",
+		"bin-debug/Platform.js",
 		"bin-debug/Core/Utils/CSVParser.js",
 		"bin-debug/Core/Utils/DisplayUtils.js",
 		"bin-debug/Core/Utils/InnerRectangle.js",
@@ -81,10 +81,11 @@
 		"bin-debug/Core/Utils/ShakeUtils.js",
 		"bin-debug/Core/Utils/StageUtils.js",
 		"bin-debug/Core/Utils/TimeUtil.js",
-		"bin-debug/Platform.js",
+		"bin-debug/ThemeAdapter.js",
 		"bin-debug/Core/Utils/UIUtil.js",
 		"bin-debug/Core/VO/BoneAnimationVO.js",
 		"bin-debug/Core/VO/ServerConfigVO.js",
-		"bin-debug/Core/VO/SoundVO.js"
+		"bin-debug/Core/VO/SoundVO.js",
+		"bin-debug/Core/Tools/BigNumber.js"
 	]
 }

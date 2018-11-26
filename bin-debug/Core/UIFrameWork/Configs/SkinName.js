@@ -4,7 +4,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var SkinName = (function () {
     function SkinName() {
     }
-    SkinName.LoginViewSkin = "resource/gameSkins/login/view/LoginViewSkin.exml";
+    SkinName.LoginViewSkin = "resource/gameSkins/login/LoginViewSkin.exml";
     return SkinName;
 }());
 __reflect(SkinName.prototype, "SkinName");
