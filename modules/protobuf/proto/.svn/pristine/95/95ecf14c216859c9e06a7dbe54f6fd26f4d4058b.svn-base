@@ -1,0 +1,13 @@
+package protocol;
+option java_package = "com.game.protobuf";
+option java_outer_classname = "NewTaskProtoMsg";
+
+// 任务更新 900   =====>服务器推送
+message NewTaskDataMsg {
+	required int32 taskId = 1;
+	required string process = 3;
+}
+
+// 任务领取奖励 ：1000 <=====客户端请求
+// 协议体：CommonMsg
+// 参数说明：intPar1:任务id

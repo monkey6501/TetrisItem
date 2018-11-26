@@ -1,0 +1,12 @@
+package protocol;
+option java_package = "com.game.protobuf";
+option java_outer_classname = "GameProtoMsg";
+
+// 游戏结算:100    <====客户端请求
+message GameOverReqMsg {
+	required int32 missionId = 1;   // 关卡id
+	required int32 process = 2;     // 关卡进度
+	required string gold = 3;        // 获得的金币
+	required int32 clickNum = 4;    // 点击次数
+}
+
