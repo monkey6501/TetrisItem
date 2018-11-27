@@ -6,6 +6,7 @@ var ViewClassName = (function () {
     }
     /** 登陆界面 */
     ViewClassName.LoginView = LoginView;
+    ViewClassName.GameMainView = GameMainView;
     return ViewClassName;
 }());
 __reflect(ViewClassName.prototype, "ViewClassName");

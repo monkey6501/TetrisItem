@@ -20,7 +20,7 @@
 		"bin-debug/Modules/Login/View/LoginView.js",
 		"bin-debug/Core/GameFrameWork/base/BaseClass.js",
 		"bin-debug/Core/Utils/TSDictionary.js",
-		"bin-debug/Center/PlayerInfo.js",
+		"bin-debug/Modules/Game/View/GameMainView.js",
 		"bin-debug/Center/PlayerInfoManager.js",
 		"bin-debug/Core/App.js",
 		"bin-debug/Core/Configs/GameConfig.js",
@@ -51,8 +51,8 @@
 		"bin-debug/Core/GameFrameWork/Net/data/PackageOut.js",
 		"bin-debug/Core/GameFrameWork/Net/event/SocketEventDispatcher.js",
 		"bin-debug/Core/GameFrameWork/Net/event/SocketEvents.js",
+		"bin-debug/Core/Tools/BigNumber.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/Core/UIFrameWork/Configs/SkinName.js",
 		"bin-debug/Core/UIFrameWork/Configs/ViewClassName.js",
 		"bin-debug/Core/UIFrameWork/Layer/DisplayLayer.js",
 		"bin-debug/Core/UIFrameWork/Layer/IStageResizeable.js",
@@ -86,6 +86,9 @@
 		"bin-debug/Core/VO/BoneAnimationVO.js",
 		"bin-debug/Core/VO/ServerConfigVO.js",
 		"bin-debug/Core/VO/SoundVO.js",
-		"bin-debug/Core/Tools/BigNumber.js"
+		"bin-debug/Modules/Game/Item/BlockItem.js",
+		"bin-debug/Modules/Game/Item/TetrisItem.js",
+		"bin-debug/Center/PlayerInfo.js",
+		"bin-debug/Core/UIFrameWork/Configs/SkinName.js"
 	]
 }

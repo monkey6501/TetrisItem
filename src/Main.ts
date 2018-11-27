@@ -90,13 +90,11 @@ class Main extends eui.UILayer {
     /** 配置文件加载完毕 */
     private loadLoadingResource(): void {
         let self = this;
-        // ResUtil.getInstance.loadGroup(["heroRes"], () => {
-        // GlobleData.getInstance.setup(() => {
-        //     FSMManager.Instance.setup();
-        //     self.loadTheme();
-        // });
-        // }, self);
-        self.loadTheme();
+        ResUtil.getInstance.loadGroup(["game"], () => {
+            // GlobleData.getInstance.setup(() => {
+                self.loadTheme();
+            // });
+        }, self);
     }
 
     private loadTheme() {

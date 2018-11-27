@@ -96,7 +96,7 @@ class LayerManager {
 	}
 
 	public resize(): void {
-		LogManager.logFormat("【 LayerManager 】stageResized-------------");
+		LogManager.logFormat("【 LayerManager 】stageResized----");
 		let width: number = StageUtils.getInstance.stage.stageWidth;
 		let height: number = StageUtils.getInstance.stage.stageHeight;
 		for (let i: number = 0; i < this._layers.length; i++) {

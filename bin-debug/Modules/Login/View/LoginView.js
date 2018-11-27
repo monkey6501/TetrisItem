@@ -13,6 +13,25 @@ var LoginView = (function (_super) {
     function LoginView() {
         return _super.call(this, SkinName.LoginViewSkin) || this;
     }
+    LoginView.prototype.addEvents = function () {
+        _super.prototype.addEvents.call(this);
+        var self = this;
+        self.beginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, self.beginBtnHandler, self);
+    };
+    LoginView.prototype.show = function () {
+        _super.prototype.show.call(this);
+        var self = this;
+    };
+    LoginView.prototype.beginBtnHandler = function () {
+        var self = this;
+        // ScenesManager.getInstance.removeView(ViewClassName.LoginView);  //后面检查一下，这个self.close()有没有删除ScenesManager里面的self._views存的值
+        self.close();
+        ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.GameMainView), LayerManager.GAME_UI_LAYER, true);
+    };
+    LoginView.prototype.dispose = function () {
+        _super.prototype.dispose.call(this);
+        var self = this;
+    };
     return LoginView;
 }(UI.BaseScene));
 __reflect(LoginView.prototype, "LoginView");

@@ -28,7 +28,7 @@ function loadServerConfig(callback) {
 		xhr.removeEventListener("load", loadComplete);
 		var serverConfigData = JSON.parse(xhr.response);
 		var serverInfo = serverConfigData.serverConfig.configs;
-		console.log("serverConfig数据：" + JSON.stringify(serverInfo) + "`````````````````````````````````````````````````````````````````");
+		console.log("serverConfig数据：" + JSON.stringify(serverInfo));
 		if (serverInfo != null) {
 			platform = serverInfo.platform;
 			resourceUrl = serverInfo.resourceUrl;

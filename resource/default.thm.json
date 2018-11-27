@@ -29,6 +29,9 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
+		"resource/gameSkins/game/BlockItemSkin.exml",
+		"resource/gameSkins/game/GameMainViewSkin.exml",
+		"resource/gameSkins/game/TetrisItemSkin.exml",
 		"resource/gameSkins/login/LoginViewSkin.exml"
 	],
 	"path": "resource/default.thm.json"

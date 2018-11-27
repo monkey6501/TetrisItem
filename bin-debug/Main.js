@@ -136,13 +136,11 @@ var Main = (function (_super) {
     /** 配置文件加载完毕 */
     Main.prototype.loadLoadingResource = function () {
         var self = this;
-        // ResUtil.getInstance.loadGroup(["heroRes"], () => {
-        // GlobleData.getInstance.setup(() => {
-        //     FSMManager.Instance.setup();
-        //     self.loadTheme();
-        // });
-        // }, self);
-        self.loadTheme();
+        ResUtil.getInstance.loadGroup(["game"], function () {
+            // GlobleData.getInstance.setup(() => {
+            self.loadTheme();
+            // });
+        }, self);
     };
     Main.prototype.loadTheme = function () {
         var _this = this;
