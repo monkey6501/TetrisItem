@@ -38,4 +38,3 @@ var BlockItem = (function (_super) {
     return BlockItem;
 }(eui.Component));
 __reflect(BlockItem.prototype, "BlockItem");
-//# sourceMappingURL=BlockItem.js.map

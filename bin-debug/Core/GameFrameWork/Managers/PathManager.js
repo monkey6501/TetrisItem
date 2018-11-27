@@ -194,4 +194,3 @@ var PathManager = (function () {
     return PathManager;
 }());
 __reflect(PathManager.prototype, "PathManager");
-//# sourceMappingURL=PathManager.js.map

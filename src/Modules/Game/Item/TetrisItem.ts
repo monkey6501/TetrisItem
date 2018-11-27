@@ -151,12 +151,12 @@ class TetrisItem extends eui.Component {
 
 	public removeEvent(): void {
 		let self = this;
-		self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);\
+		self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
 	}
 
 	private clickhandler(): void {
 		let self = this;
-		self.creatShape(self.shapeList[self.getRandomShape()]);
+		// self.creatShape(self.shapeList[self.getRandomShape()]);
 	}
 
 	public dispose(): void {

@@ -23,4 +23,3 @@ var LoginManager = (function () {
     return LoginManager;
 }());
 __reflect(LoginManager.prototype, "LoginManager");
-//# sourceMappingURL=LoginManager.js.map

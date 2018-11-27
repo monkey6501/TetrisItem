@@ -26,4 +26,3 @@ var EventsManager = (function (_super) {
     return EventsManager;
 }(egret.EventDispatcher));
 __reflect(EventsManager.prototype, "EventsManager");
-//# sourceMappingURL=EventsManager.js.map

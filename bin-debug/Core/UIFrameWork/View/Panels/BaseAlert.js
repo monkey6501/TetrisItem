@@ -117,4 +117,3 @@ var UI;
     UI.BaseAlert = BaseAlert;
     __reflect(BaseAlert.prototype, "UI.BaseAlert");
 })(UI || (UI = {}));
-//# sourceMappingURL=BaseAlert.js.map

@@ -145,4 +145,3 @@ var ScenesManager = (function () {
     return ScenesManager;
 }());
 __reflect(ScenesManager.prototype, "ScenesManager");
-//# sourceMappingURL=ScenesManager.js.map

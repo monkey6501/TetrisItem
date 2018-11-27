@@ -42,4 +42,3 @@ var SdkManager = (function () {
     return SdkManager;
 }());
 __reflect(SdkManager.prototype, "SdkManager");
-//# sourceMappingURL=SdkManager.js.map

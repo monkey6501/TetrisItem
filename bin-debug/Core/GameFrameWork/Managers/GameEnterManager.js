@@ -21,4 +21,3 @@ var GameEnterManager = (function () {
     return GameEnterManager;
 }());
 __reflect(GameEnterManager.prototype, "GameEnterManager");
-//# sourceMappingURL=GameEnterManager.js.map

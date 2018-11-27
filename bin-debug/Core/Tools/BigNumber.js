@@ -671,4 +671,3 @@ var BigNumber = (function () {
     return BigNumber;
 }());
 __reflect(BigNumber.prototype, "BigNumber");
-//# sourceMappingURL=BigNumber.js.map

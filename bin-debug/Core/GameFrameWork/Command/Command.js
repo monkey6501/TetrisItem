@@ -38,4 +38,3 @@ var Command = (function () {
     return Command;
 }());
 __reflect(Command.prototype, "Command");
-//# sourceMappingURL=Command.js.map

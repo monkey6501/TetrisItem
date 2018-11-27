@@ -59,4 +59,3 @@ var LogManager = (function () {
     return LogManager;
 }());
 __reflect(LogManager.prototype, "LogManager");
-//# sourceMappingURL=LogManager.js.map

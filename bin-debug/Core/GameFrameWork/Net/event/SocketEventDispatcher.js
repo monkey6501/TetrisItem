@@ -26,4 +26,3 @@ var SocketEventDispatcher = (function (_super) {
     return SocketEventDispatcher;
 }(egret.EventDispatcher));
 __reflect(SocketEventDispatcher.prototype, "SocketEventDispatcher");
-//# sourceMappingURL=SocketEventDispatcher.js.map

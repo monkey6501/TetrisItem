@@ -32,4 +32,3 @@ var GameMainView = (function (_super) {
     return GameMainView;
 }(UI.BaseScene));
 __reflect(GameMainView.prototype, "GameMainView");
-//# sourceMappingURL=GameMainView.js.map

@@ -234,4 +234,3 @@ var UI;
     UI.BaseView = BaseView;
     __reflect(BaseView.prototype, "UI.BaseView");
 })(UI || (UI = {}));
-//# sourceMappingURL=BaseView.js.map

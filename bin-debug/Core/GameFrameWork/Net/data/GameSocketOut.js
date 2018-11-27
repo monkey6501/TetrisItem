@@ -9,4 +9,3 @@ var GameSocketOut = (function () {
     return GameSocketOut;
 }());
 __reflect(GameSocketOut.prototype, "GameSocketOut");
-//# sourceMappingURL=GameSocketOut.js.map

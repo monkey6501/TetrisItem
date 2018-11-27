@@ -228,4 +228,3 @@ var ResUtil = (function () {
     return ResUtil;
 }());
 __reflect(ResUtil.prototype, "ResUtil");
-//# sourceMappingURL=ResUtil.js.map

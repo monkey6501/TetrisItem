@@ -13,4 +13,3 @@ var UIType;
     UIType[UIType["Panel"] = 1] = "Panel";
     UIType[UIType["Alert"] = 2] = "Alert";
 })(UIType || (UIType = {}));
-//# sourceMappingURL=UIModel.js.map

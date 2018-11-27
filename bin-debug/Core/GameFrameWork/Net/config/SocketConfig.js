@@ -14,4 +14,3 @@ var SocketConfig = (function () {
     return SocketConfig;
 }());
 __reflect(SocketConfig.prototype, "SocketConfig");
-//# sourceMappingURL=SocketConfig.js.map

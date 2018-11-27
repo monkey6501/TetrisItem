@@ -84,7 +84,7 @@ var LayerManager = (function () {
         }
     };
     LayerManager.prototype.resize = function () {
-        LogManager.logFormat("【 LayerManager 】stageResized-------------");
+        LogManager.logFormat("【 LayerManager 】stageResized----");
         var width = StageUtils.getInstance.stage.stageWidth;
         var height = StageUtils.getInstance.stage.stageHeight;
         for (var i = 0; i < this._layers.length; i++) {
@@ -113,4 +113,3 @@ var LayerManager = (function () {
     return LayerManager;
 }());
 __reflect(LayerManager.prototype, "LayerManager");
-//# sourceMappingURL=LayerManager.js.map

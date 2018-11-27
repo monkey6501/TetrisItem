@@ -150,7 +150,7 @@ var TetrisItem = (function (_super) {
     };
     TetrisItem.prototype.clickhandler = function () {
         var self = this;
-        self.creatShape(self.shapeList[self.getRandomShape()]);
+        // self.creatShape(self.shapeList[self.getRandomShape()]);
     };
     TetrisItem.prototype.dispose = function () {
         var self = this;
@@ -160,4 +160,3 @@ var TetrisItem = (function (_super) {
     return TetrisItem;
 }(eui.Component));
 __reflect(TetrisItem.prototype, "TetrisItem");
-//# sourceMappingURL=TetrisItem.js.map

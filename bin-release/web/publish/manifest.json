@@ -1,0 +1,21 @@
+{
+	"initial": [
+		"js/egret.min_f3705262.js",
+		"js/egret.web.min_2dd0bd72.js",
+		"js/eui.min_4f767512.js",
+		"js/assetsmanager.min_f2e50bd1.js",
+		"js/tween.min_6c5a88f9.js",
+		"js/dragonBones.min_6252b9c4.js",
+		"js/socket.min_8b4cb752.js",
+		"js/game.min_45aa06f6.js",
+		"js/promise.min_83a6a5d.js"
+	],
+	"game": [
+		"js/jszip.min_a0ad385d.js",
+		"js/external.min_642a2004.js",
+		"js/protobuf-library.min_97b4e2f5.js",
+		"js/protobuf-bundles.min_f38bc054.js",
+		"js/default.thm_d5bdd601.js",
+		"js/main.min_7432adc2.js"
+	]
+}

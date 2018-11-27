@@ -109,4 +109,3 @@ var SocketManager = (function (_super) {
     return SocketManager;
 }(egret.EventDispatcher));
 __reflect(SocketManager.prototype, "SocketManager");
-//# sourceMappingURL=SocketManager.js.map

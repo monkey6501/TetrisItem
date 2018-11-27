@@ -189,4 +189,3 @@ var PackageOutTypeVo = (function () {
     return PackageOutTypeVo;
 }());
 __reflect(PackageOutTypeVo.prototype, "PackageOutTypeVo");
-//# sourceMappingURL=PackageOutTypeVo.js.map
