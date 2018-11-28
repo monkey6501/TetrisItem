@@ -23,3 +23,4 @@ var UI;
     UI.BasePanel = BasePanel;
     __reflect(BasePanel.prototype, "UI.BasePanel");
 })(UI || (UI = {}));
+//# sourceMappingURL=BasePanel.js.map

@@ -6,7 +6,8 @@ var GameEnterManager = (function () {
     }
     GameEnterManager.prototype.setup = function () {
         PlayerInfoManager.getInstance.setup();
-        BoneManager.Instance.start();
+        LogicManager.getInstance.setup();
+        // BoneManager.Instance.start();
     };
     Object.defineProperty(GameEnterManager, "Instance", {
         get: function () {
@@ -21,3 +22,4 @@ var GameEnterManager = (function () {
     return GameEnterManager;
 }());
 __reflect(GameEnterManager.prototype, "GameEnterManager");
+//# sourceMappingURL=GameEnterManager.js.map

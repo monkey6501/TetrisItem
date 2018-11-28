@@ -2,7 +2,8 @@ class GameEnterManager {
 
 	public setup(): void {
 		PlayerInfoManager.getInstance.setup();
-		BoneManager.Instance.start();
+		LogicManager.getInstance.setup();
+		// BoneManager.Instance.start();
 	}
 
 	private static _instance: GameEnterManager;

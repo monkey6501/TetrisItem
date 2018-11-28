@@ -1,5 +1,9 @@
 class BlockItem extends eui.Component {
 	private icon: eui.Image;
+
+	public row: number;
+	public col: number;
+	public iconColor: number;
 	public constructor() {
 		super();
 		this.skinName = SkinName.BlockItemSkin;
@@ -11,9 +15,12 @@ class BlockItem extends eui.Component {
 		self.addEvents();
 	}
 
-	public setColor(type: number): void {
+	public setData(type: number, r: number, c: number): void {
 		let self = this;
+		self.iconColor = type;
 		self.icon.source = "game_json.item" + type;
+		self.row = r;
+		self.col = c;
 	}
 
 	public addEvents(): void {

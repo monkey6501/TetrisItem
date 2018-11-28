@@ -10,3 +10,4 @@ var ViewClassName = (function () {
     return ViewClassName;
 }());
 __reflect(ViewClassName.prototype, "ViewClassName");
+//# sourceMappingURL=ViewClassName.js.map

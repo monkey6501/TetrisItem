@@ -55,3 +55,4 @@ var SocketEvents = (function (_super) {
     return SocketEvents;
 }(egret.Event));
 __reflect(SocketEvents.prototype, "SocketEvents");
+//# sourceMappingURL=SocketEvents.js.map

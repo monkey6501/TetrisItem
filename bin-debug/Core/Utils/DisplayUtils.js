@@ -102,6 +102,25 @@ var DisplayUtils = (function () {
             }
         }
     };
+    /**
+     * dispose所有子对象并回收
+     * @param container
+     */
+    DisplayUtils.disposeAllChildren = function (container) {
+        if (!container)
+            return;
+        if (container && container.numChildren) {
+            while (container.numChildren) {
+                var node = container.getChildAt(0);
+                if (node) {
+                    if (node.parent) {
+                        node.dispose();
+                    }
+                    node = null;
+                }
+            }
+        }
+    };
     DisplayUtils.traceAllChildren = function (container) {
         if (!container)
             return;
@@ -233,3 +252,4 @@ var DisplayUtils = (function () {
     return DisplayUtils;
 }());
 __reflect(DisplayUtils.prototype, "DisplayUtils");
+//# sourceMappingURL=DisplayUtils.js.map

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="LoginViewSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="bg_jpg"/>
 	<e:Button id="beginBtn" label="开始" x="274" y="1014"/>
 </e:Skin>

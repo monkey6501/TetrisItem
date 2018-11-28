@@ -52,10 +52,12 @@ var TetrisItem = (function (_super) {
             [[1, 0, 0], [1, 0, 0], [1, 1, 1]]
         ];
         _this.weightList = [8, 4, 4, 4, 4, 2, 2, 2, 2, 8, 4, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 2, 2, 2, 2];
-        _this.myShape = [];
-        _this.shapeBox = new egret.Sprite();
         _this.totalWeight = 0;
         _this.shapeLen = 0;
+        _this.myShape = [];
+        /** 0:没有使用  1:已经使用  */
+        _this.state = 0;
+        _this.itemList = [];
         _this.skinName = SkinName.TetrisItemSkin;
         return _this;
     }
@@ -69,8 +71,9 @@ var TetrisItem = (function (_super) {
     TetrisItem.prototype.initView = function () {
         var self = this;
         // self.showAllShape();
-        self.addChild(self.shapeBox);
-        self.creatShape(self.shapeList[self.getRandomShape()]);
+        self.addChild(self.iconGroup);
+        self.ranColor = Math.floor(Math.random() * 6) + 1;
+        self.creatShape(self.shapeList[self.getRandomShape()], self.ranColor);
     };
     /**初始化数据 */
     TetrisItem.prototype.initData = function () {
@@ -94,26 +97,29 @@ var TetrisItem = (function (_super) {
         return 0;
     };
     /**创建形状 */
-    TetrisItem.prototype.creatShape = function (shape) {
+    TetrisItem.prototype.creatShape = function (shape, colorType) {
         var self = this;
         self.myShape = shape.concat();
-        var ranColor = Math.floor(Math.random() * 6) + 1;
         var len1 = self.myShape.length;
-        DisplayUtils.removeAllChildren(self.shapeBox);
+        self.itemList = [];
+        DisplayUtils.removeAllChildren(self.iconGroup);
         for (var j = 0; j < len1; j++) {
             var len2 = self.myShape[j].length;
+            var arr = [];
             for (var k = 0; k < len2; k++) {
                 if (self.myShape[j][k] != 0) {
                     var block = new BlockItem();
-                    block.setColor(ranColor);
+                    block.setData(colorType, j, k);
                     block.x = k * block.width;
                     block.y = j * block.height;
-                    self.shapeBox.addChild(block);
+                    self.iconGroup.addChild(block);
+                    arr.push(block);
                 }
             }
+            self.itemList.push(arr);
         }
     };
-    /**展示所有形状 */
+    /**展示所有形状---测试用的 */
     TetrisItem.prototype.showAllShape = function () {
         var self = this;
         var ranShape = self.shapeList[Math.floor(self.shapeLen * Math.random())];
@@ -127,7 +133,7 @@ var TetrisItem = (function (_super) {
                 for (var k = 0; k < len2; k++) {
                     if (self.shapeList[i][j][k] != 0) {
                         var block = new BlockItem();
-                        block.setColor(ranColor);
+                        block.setData(ranColor, j, k);
                         block.x = k * block.width;
                         block.y = j * block.height;
                         tetrisBox.addChild(block);
@@ -142,15 +148,26 @@ var TetrisItem = (function (_super) {
     };
     TetrisItem.prototype.addEvent = function () {
         var self = this;
-        self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+        self.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
+        self.addEventListener(egret.Event.REMOVED_FROM_STAGE, self.removeFromStage, self);
     };
     TetrisItem.prototype.removeEvent = function () {
         var self = this;
-        self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+        self.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
     };
-    TetrisItem.prototype.clickhandler = function () {
+    TetrisItem.prototype.removeFromStage = function () {
         var self = this;
-        // self.creatShape(self.shapeList[self.getRandomShape()]);
+        self.removeEventListener(egret.Event.REMOVED_FROM_STAGE, self.removeFromStage, self);
+        self.dispose();
+    };
+    TetrisItem.prototype.touchBeginHandler = function () {
+        var self = this;
+        // self.setVisible(false);
+        EventsManager.getInstance.dispatchEventWith(EventName.ITEM_CLICK, false, { type: self.ranColor, shape: self.myShape });
+    };
+    TetrisItem.prototype.setVisible = function (value) {
+        var self = this;
+        self.iconGroup.visible = value;
     };
     TetrisItem.prototype.dispose = function () {
         var self = this;
@@ -160,3 +177,4 @@ var TetrisItem = (function (_super) {
     return TetrisItem;
 }(eui.Component));
 __reflect(TetrisItem.prototype, "TetrisItem");
+//# sourceMappingURL=TetrisItem.js.map

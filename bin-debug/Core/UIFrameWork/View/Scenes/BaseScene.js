@@ -23,3 +23,4 @@ var UI;
     UI.BaseScene = BaseScene;
     __reflect(BaseScene.prototype, "UI.BaseScene");
 })(UI || (UI = {}));
+//# sourceMappingURL=BaseScene.js.map

@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameMainViewSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="game_json.bg1" scale9Grid="12,12,76,76" width="640" height="1136"/>
-	<e:Label text="score:" x="110" y="33"/>
-	<e:Label id="scoreLabel" text="0" x="200" y="35"/>
+	<e:Label text="score:" x="110" y="63"/>
+	<e:Label id="scoreLabel" text="0" x="200" y="65"/>
+	<e:Group id="mapGroup" y="107" anchorOffsetX="0" x="80">
+	</e:Group>
+	<e:Group id="ranGroup1" width="200" height="200" y="811" anchorOffsetX="0" anchorOffsetY="0" x="0">
+		<e:layout>
+			<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="ranGroup2" width="200" height="200" y="811" anchorOffsetX="0" anchorOffsetY="0" x="220">
+		<e:layout>
+			<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="ranGroup3" width="200" height="200" y="811" anchorOffsetX="0" anchorOffsetY="0" x="440">
+		<e:layout>
+			<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
 </e:Skin>

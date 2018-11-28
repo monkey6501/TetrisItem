@@ -20,9 +20,12 @@ var BlockItem = (function (_super) {
         _super.prototype.childrenCreated.call(this);
         self.addEvents();
     };
-    BlockItem.prototype.setColor = function (type) {
+    BlockItem.prototype.setData = function (type, r, c) {
         var self = this;
+        self.iconColor = type;
         self.icon.source = "game_json.item" + type;
+        self.row = r;
+        self.col = c;
     };
     BlockItem.prototype.addEvents = function () {
         var self = this;
@@ -38,3 +41,4 @@ var BlockItem = (function (_super) {
     return BlockItem;
 }(eui.Component));
 __reflect(BlockItem.prototype, "BlockItem");
+//# sourceMappingURL=BlockItem.js.map

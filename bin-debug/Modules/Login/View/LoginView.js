@@ -35,3 +35,4 @@ var LoginView = (function (_super) {
     return LoginView;
 }(UI.BaseScene));
 __reflect(LoginView.prototype, "LoginView");
+//# sourceMappingURL=LoginView.js.map

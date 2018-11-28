@@ -54,6 +54,8 @@ declare class BlockItemSkin extends eui.Skin{
 }
 declare class GameMainViewSkin extends eui.Skin{
 }
+declare class MapItemSkin extends eui.Skin{
+}
 declare class TetrisItemSkin extends eui.Skin{
 }
 declare class LoginViewSkin extends eui.Skin{

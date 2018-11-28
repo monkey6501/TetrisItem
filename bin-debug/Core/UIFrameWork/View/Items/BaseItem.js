@@ -113,3 +113,4 @@ var UI;
     UI.BaseItem = BaseItem;
     __reflect(BaseItem.prototype, "UI.BaseItem");
 })(UI || (UI = {}));
+//# sourceMappingURL=BaseItem.js.map

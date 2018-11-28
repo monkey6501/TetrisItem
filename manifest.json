@@ -52,9 +52,9 @@
 		"bin-debug/Core/GameFrameWork/Net/event/SocketEventDispatcher.js",
 		"bin-debug/Core/GameFrameWork/Net/event/SocketEvents.js",
 		"bin-debug/Core/Tools/BigNumber.js",
-		"bin-debug/LoadingUI.js",
+		"bin-debug/Core/UIFrameWork/Configs/SkinName.js",
 		"bin-debug/Core/UIFrameWork/Configs/ViewClassName.js",
-		"bin-debug/Core/UIFrameWork/Layer/DisplayLayer.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/Core/UIFrameWork/Layer/IStageResizeable.js",
 		"bin-debug/Core/UIFrameWork/Layer/LayerManager.js",
 		"bin-debug/Core/UIFrameWork/Managers/ScenesManager.js",
@@ -86,9 +86,12 @@
 		"bin-debug/Core/VO/BoneAnimationVO.js",
 		"bin-debug/Core/VO/ServerConfigVO.js",
 		"bin-debug/Core/VO/SoundVO.js",
+		"bin-debug/Modules/Game/EventName.js",
+		"bin-debug/Modules/Game/LogicManager.js",
 		"bin-debug/Modules/Game/Item/BlockItem.js",
+		"bin-debug/Modules/Game/Item/MapItem.js",
 		"bin-debug/Modules/Game/Item/TetrisItem.js",
 		"bin-debug/Center/PlayerInfo.js",
-		"bin-debug/Core/UIFrameWork/Configs/SkinName.js"
+		"bin-debug/Core/UIFrameWork/Layer/DisplayLayer.js"
 	]
 }

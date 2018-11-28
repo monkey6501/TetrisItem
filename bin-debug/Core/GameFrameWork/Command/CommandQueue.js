@@ -62,3 +62,4 @@ var CommandQueue = (function () {
     return CommandQueue;
 }());
 __reflect(CommandQueue.prototype, "CommandQueue");
+//# sourceMappingURL=CommandQueue.js.map

@@ -4,5 +4,6 @@ class SkinName {
 	public static GameMainViewSkin: string = "resource/gameSkins/game/GameMainViewSkin.exml";
 	public static BlockItemSkin: string = "resource/gameSkins/game/BlockItemSkin.exml";
 	public static TetrisItemSkin: string = "resource/gameSkins/game/TetrisItemSkin.exml";
+	public static MapItemSkin: string = "resource/gameSkins/game/MapItemSkin.exml";
 
 }

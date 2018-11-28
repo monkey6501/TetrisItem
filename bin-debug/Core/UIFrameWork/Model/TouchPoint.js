@@ -8,3 +8,4 @@ var TouchPoint = (function () {
     return TouchPoint;
 }());
 __reflect(TouchPoint.prototype, "TouchPoint");
+//# sourceMappingURL=TouchPoint.js.map

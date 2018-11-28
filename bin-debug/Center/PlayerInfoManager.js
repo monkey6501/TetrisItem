@@ -29,3 +29,4 @@ var PlayerInfoManager = (function (_super) {
     return PlayerInfoManager;
 }(egret.EventDispatcher));
 __reflect(PlayerInfoManager.prototype, "PlayerInfoManager");
+//# sourceMappingURL=PlayerInfoManager.js.map

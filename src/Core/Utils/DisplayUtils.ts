@@ -113,6 +113,25 @@ class DisplayUtils {
         }
     }
 
+    /**
+     * dispose所有子对象并回收
+     * @param container
+     */
+    public static disposeAllChildren(container: any): void {
+        if (!container) return;
+        if (container && container.numChildren) {
+            while (container.numChildren) {
+                var node: any = container.getChildAt(0);
+                if (node) {
+                    if (node.parent) {
+                        node.dispose();
+                    }
+                    node = null;
+                }
+            }
+        }
+    }
+
     public static traceAllChildren(container: egret.DisplayObjectContainer): void {
         if (!container) return;
         for (let i: number = 0; i < container.numChildren; i++) {
