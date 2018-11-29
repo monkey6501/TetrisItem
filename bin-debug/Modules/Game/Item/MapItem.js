@@ -15,6 +15,8 @@ var MapItem = (function (_super) {
         _this._state = 0;
         _this.row = 0;
         _this.col = 0;
+        /** 0 不用销毁  1待销毁 */
+        _this.destroy = 0;
         _this.skinName = SkinName.MapItemSkin;
         _this.row = r;
         _this.col = c;
@@ -35,6 +37,7 @@ var MapItem = (function (_super) {
         self._state = state;
         if (self._state == 0) {
             self.icon.visible = false;
+            self.showDestroyShadow(0);
         }
         else if (self._state == 1) {
             self.icon.visible = true;
@@ -44,6 +47,11 @@ var MapItem = (function (_super) {
             self.icon.visible = true;
             self.icon.alpha = 0.5;
         }
+    };
+    MapItem.prototype.showDestroyShadow = function (value) {
+        var self = this;
+        self.destroy = value;
+        self.alpha = value != 0 ? 0.5 : 1;
     };
     Object.defineProperty(MapItem.prototype, "state", {
         get: function () {

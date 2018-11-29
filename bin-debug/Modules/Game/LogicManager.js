@@ -57,12 +57,23 @@ var LogicManager = (function (_super) {
             return false;
         }
     };
+    /** value 在 min和max之间 包含min和max */
+    LogicManager.prototype.betweenTwoNumber = function (value, min, max) {
+        if (value >= min && value <= max) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
     /**地图行数量 */
     LogicManager.MAP_ROW = 8;
     /**地图列数量 */
     LogicManager.MAP_COL = 8;
     /**每次随机出现方块的数量 */
     LogicManager.RANDOM_COUNT = 3;
+    /**锤子敲碎正方形延伸的范围 */
+    LogicManager.HAMMER_AREA = 1;
     return LogicManager;
 }(egret.EventDispatcher));
 __reflect(LogicManager.prototype, "LogicManager");

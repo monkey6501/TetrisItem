@@ -11,7 +11,13 @@ class GameMainView extends UI.BaseScene {
 
 	private moveItem: TetrisItem = new TetrisItem();
 	private chooseItem: TetrisItem;
+
+	private destroyBtn: eui.Button;
 	private restartBtn: eui.Button;
+	private refreshBtn: eui.Button;
+
+	private hammer: eui.Image = new eui.Image();
+	private destroyPos: any = {};
 
 	public constructor() {
 		super(SkinName.GameMainViewSkin);
@@ -20,7 +26,9 @@ class GameMainView extends UI.BaseScene {
 	public addEvents(): void {
 		super.addEvents();
 		let self = this;
+		self.destroyBtn.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.destroyBtnHandler, self);
 		self.restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, self.restartHandler, self);
+		self.refreshBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, self.refreshBtnHandler, self);
 		self.ranGroup1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -32,12 +40,14 @@ class GameMainView extends UI.BaseScene {
 
 	public removeEvents(): void {
 		let self = this;
+		self.destroyBtn.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.destroyBtnHandler, self);
 		self.restartBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.restartHandler, self);
+		self.refreshBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.refreshBtnHandler, self);
 		self.ranGroup1.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup2.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.removeEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
-		self.addEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
+		self.removeEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
 		App.TimerManager.remove(self.enterHandler, self);
 	}
 
@@ -47,14 +57,21 @@ class GameMainView extends UI.BaseScene {
 		self.randomTetrisItem();
 		self.createMap();
 		self.mapGroup.addChild(self.moveItem);
+		self.mapGroup.addChild(self.hammer);
+		self.hammer.source = "game_json.icon1";
+		self.hammer.visible = false;
 		self.moveItem.visible = false;
 	}
 
 	private enterHandler(): void {
 		let self = this;
-		if (!self.moveItem.visible) return;
 
-		self.updataMap();
+		if (self.moveItem.visible) {
+			self.updataMap();
+		}
+		if (self.hammer.visible) {
+			self.updataHammerMap();
+		}
 	}
 
 	private updataScoreLabel(value: number): void {
@@ -62,7 +79,7 @@ class GameMainView extends UI.BaseScene {
 		self.scoreLabel.text = value + "";
 	}
 
-	/** 更新地图 */
+	/** 出现移动块，更新地图 */
 	private updataMap(): void {
 		let self = this;
 		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
@@ -71,6 +88,57 @@ class GameMainView extends UI.BaseScene {
 				self.checkMapItem(self.moveItem, item);
 			}
 		}
+	}
+
+	/** 出现锤子，更新地图 */
+	private updataHammerMap(): void {
+		let self = this;
+		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
+			for (let j: number = 0; j < LogicManager.MAP_COL; j++) {
+				let item: MapItem = self.mapItemList[i][j];
+				self.checkHammerMapItem(item);
+			}
+		}
+	}
+
+	/**
+	 * 根据锤子位置检测地图，并更新地图小格子。
+	 * 
+	 */
+	private checkHammerMapItem(item: MapItem): void {
+		let self = this;
+		if (self.checkHammerInMap()) {
+			if (LogicManager.getInstance.inTouchArea(self.hammer.x, self.hammer.y, self.hammer.width, self.hammer.height, item)) {
+				item.showDestroyShadow(1);
+				self.showDestroyArea(item);
+				self.destroyPos = { row: item.row, col: item.col };
+				return;
+			}
+		}
+	}
+
+	/** 展示销毁面积 */
+	private showDestroyArea(item: MapItem): void {
+		let self = this;
+		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
+			for (let j: number = 0; j < LogicManager.MAP_COL; j++) {
+				let mapItem: MapItem = self.mapItemList[i][j];
+				if (LogicManager.getInstance.betweenTwoNumber(i, item.row - LogicManager.HAMMER_AREA, item.row + LogicManager.HAMMER_AREA) &&
+					LogicManager.getInstance.betweenTwoNumber(j, item.col - LogicManager.HAMMER_AREA, item.col + LogicManager.HAMMER_AREA)
+				) {
+					mapItem.showDestroyShadow(1);
+				} else {
+					mapItem.showDestroyShadow(0);
+				}
+			}
+		}
+	}
+
+	/**检测锤子是否在地图上 */
+	private checkHammerInMap(): boolean {
+		let self = this;
+
+		return true;
 	}
 
 	/** TOUCH_END 后把阴影的方块固定 */
@@ -243,9 +311,44 @@ class GameMainView extends UI.BaseScene {
 		self.moveItem.visible = true;
 	}
 
+	private offSetX: number = 0;
+	private offSetY: number = 0;
+	private initOffset(sx: number, sy: number): void {
+		this.offSetX = sx - this.moveItem.x;
+		this.offSetY = sy - this.moveItem.y;
+	}
+
+	private offSetX1: number = 0;
+	private offSetY1: number = 0;
+	private initHarmmerOffset(sx: number, sy: number): void {
+		this.offSetX1 = sx - this.hammer.x;
+		this.offSetY1 = sy - this.hammer.y;
+	}
+
+	private touchMoveHandler(e: egret.TouchEvent): void {
+		let self = this;
+		var sX: number = e.stageX;
+		var sY: number = e.stageY;
+		if (self.moveItem.visible) {
+			self.moveItem.x = sX - self.offSetX;
+			self.moveItem.y = sY - self.offSetY;
+		}
+
+		if (self.hammer.visible) {
+			self.hammer.x = sX - self.offSetX1;
+			self.hammer.y = sY - self.offSetY1;
+		}
+	}
+
 	private touchEndHandler(): void {
 		let self = this;
 		self.moveItem.visible = false;
+
+		if (self.hammer.visible) {
+			self.hammerRelease();
+			self.hammer.visible = false;
+			return;
+		}
 
 		if (self.touchEndMapItem()) {
 			self.chooseItem.state = 1;
@@ -322,21 +425,6 @@ class GameMainView extends UI.BaseScene {
 		return result;
 	}
 
-	private offSetX: number = 0;
-	private offSetY: number = 0;
-	private initOffset(sx: number, sy: number): void {
-		this.offSetX = sx - this.moveItem.x;
-		this.offSetY = sy - this.moveItem.y;
-	}
-
-	private touchMoveHandler(e: egret.TouchEvent): void {
-		let self = this;
-		var sX: number = e.stageX;
-		var sY: number = e.stageY;
-		self.moveItem.x = sX - self.offSetX;
-		self.moveItem.y = sY - self.offSetY;
-	}
-
 	/** 重新开始游戏 */
 	private restartHandler(): void {
 		let self = this;
@@ -344,6 +432,33 @@ class GameMainView extends UI.BaseScene {
 		self.randomTetrisItem();
 		LogicManager.getInstance.score = 0;
 		self.updataScoreLabel(LogicManager.getInstance.score);
+	}
+
+	/** 销毁地图格子 */
+	private destroyBtnHandler(e: egret.TouchEvent): void {
+		let self = this;
+		self.hammer.visible = true;
+		self.hammer.x = self.mapGroup.x;
+		self.hammer.y = 500;
+		self.initHarmmerOffset(e.stageX, e.stageY);
+	}
+
+	/** 刷新待放入块 */
+	private refreshBtnHandler(): void {
+		let self = this;
+		self.randomTetrisItem();
+	}
+
+	/**释放锤子 */
+	private hammerRelease(): void {
+		let self = this;
+		for (let i: number = self.destroyPos.row - LogicManager.HAMMER_AREA; i <= self.destroyPos.row + LogicManager.HAMMER_AREA; i++) {
+			for (let j: number = self.destroyPos.col - LogicManager.HAMMER_AREA; j <= self.destroyPos.col + LogicManager.HAMMER_AREA; j++) {
+				if (LogicManager.getInstance.betweenTwoNumber(i, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(j, 0, LogicManager.MAP_COL - 1)) {
+					self.updataMapItem(i, j, 0);
+				}
+			}
+		}
 	}
 
 	/**清空地图 */

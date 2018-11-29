@@ -17,6 +17,8 @@ class LogicManager extends egret.EventDispatcher {
 	public static MAP_COL: number = 8;
 	/**每次随机出现方块的数量 */
 	public static RANDOM_COUNT: number = 3;
+	/**锤子敲碎正方形延伸的范围 */
+	public static HAMMER_AREA: number = 1;
 
 	public score: number = 0;
 
@@ -56,4 +58,12 @@ class LogicManager extends egret.EventDispatcher {
 		}
 	}
 
+	/** value 在 min和max之间 包含min和max */
+	public betweenTwoNumber(value: number, min: number, max: number): boolean {
+		if (value >= min && value <= max) {
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
