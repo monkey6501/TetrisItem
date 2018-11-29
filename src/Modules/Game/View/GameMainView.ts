@@ -11,6 +11,7 @@ class GameMainView extends UI.BaseScene {
 
 	private moveItem: TetrisItem = new TetrisItem();
 	private chooseItem: TetrisItem;
+	private restartBtn: eui.Button;
 
 	public constructor() {
 		super(SkinName.GameMainViewSkin);
@@ -19,18 +20,19 @@ class GameMainView extends UI.BaseScene {
 	public addEvents(): void {
 		super.addEvents();
 		let self = this;
-		// self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+		self.restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, self.restartHandler, self);
 		self.ranGroup1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.addEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
 		self.addEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
+
 		App.TimerManager.doFrame(6, 0, self.enterHandler, self);
 	}
 
 	public removeEvents(): void {
 		let self = this;
-		// self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+		self.restartBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.restartHandler, self);
 		self.ranGroup1.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup2.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -205,7 +207,7 @@ class GameMainView extends UI.BaseScene {
 	}
 
 	/**
-	 * 检测地图小格子与 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
+	 * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
 	 * 
 	 */
 	private checkMapItem(tetris: TetrisItem, item: MapItem): void {
@@ -256,6 +258,9 @@ class GameMainView extends UI.BaseScene {
 		self.rebuildRanGroup();
 		self.checkMapBlock();
 		self.updataScoreLabel(LogicManager.getInstance.score);
+		if (!self.canContinue()) {
+			MessageManger.getInstance.showText("不行了");
+		}
 	}
 
 	/** 判断下方块是否使用完，如使用完新生成 */
@@ -268,6 +273,53 @@ class GameMainView extends UI.BaseScene {
 			}
 		}
 		self.randomTetrisItem();
+	}
+
+	/** 判断是否能继续加块 */
+	private canContinue(): boolean {
+		let self = this;
+		let result: boolean = false;
+		for (let i: number = 1; i <= LogicManager.RANDOM_COUNT; i++) {
+			let item: TetrisItem = self["ranGroup" + i].getChildAt(0);
+			if (item.state == 0 && self.checkItemAddMap(item)) {
+				return true;
+			}
+		}
+		return result;
+	}
+
+	/** 检测 TetrisItem 能不能放到 Map 中 */
+	private checkItemAddMap(item: TetrisItem): boolean {
+		let self = this;
+		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
+			if (i > LogicManager.MAP_ROW - item.myShape.length) {
+				return false;
+			}
+			for (let j: number = 0; j < LogicManager.MAP_COL; j++) {
+				if (j > LogicManager.MAP_COL - item.myShape[0].length) {
+					break;
+				}
+				if (self.checkMatchShape(i, j, item)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/** 从地图的一个点出发往右下延伸一块 TetrisItem 矩形区域，这个区域是否存在与给的 TetrisItem 相匹配的形状 */
+	private checkMatchShape(r: number, c: number, item: TetrisItem): boolean {
+		let self = this;
+		let result: boolean = true;
+		for (let i: number = 0; i < item.myShape.length; i++) {
+			for (let j: number = 0; j < item.myShape[i].length; j++) {
+				let mapItem: MapItem = self.mapItemList[i + r][j + c];
+				if (item.myShape[i][j] == 1 && mapItem.state == 1) {
+					return false;
+				}
+			}
+		}
+		return result;
 	}
 
 	private offSetX: number = 0;
@@ -285,9 +337,25 @@ class GameMainView extends UI.BaseScene {
 		self.moveItem.y = sY - self.offSetY;
 	}
 
-	// private clickhandler(): void {
-	// 	let self = this;
-	// }
+	/** 重新开始游戏 */
+	private restartHandler(): void {
+		let self = this;
+		self.clearMap();
+		self.randomTetrisItem();
+		LogicManager.getInstance.score = 0;
+		self.updataScoreLabel(LogicManager.getInstance.score);
+	}
+
+	/**清空地图 */
+	private clearMap(): void {
+		let self = this;
+		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
+			for (let j: number = 0; j < LogicManager.MAP_COL; j++) {
+				let item: MapItem = self.mapItemList[i][j];
+				item.setIconType(1, 0);
+			}
+		}
+	}
 
 	private createMap(): void {
 		let self = this;

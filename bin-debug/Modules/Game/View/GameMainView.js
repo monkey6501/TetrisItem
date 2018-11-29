@@ -22,7 +22,7 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.addEvents = function () {
         _super.prototype.addEvents.call(this);
         var self = this;
-        // self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+        self.restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, self.restartHandler, self);
         self.ranGroup1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -32,7 +32,7 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.removeEvents = function () {
         var self = this;
-        // self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+        self.restartBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.restartHandler, self);
         self.ranGroup1.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup2.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -190,7 +190,7 @@ var GameMainView = (function (_super) {
         return false;
     };
     /**
-     * 检测地图小格子与 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
+     * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
      *
      */
     GameMainView.prototype.checkMapItem = function (tetris, item) {
@@ -237,6 +237,9 @@ var GameMainView = (function (_super) {
         self.rebuildRanGroup();
         self.checkMapBlock();
         self.updataScoreLabel(LogicManager.getInstance.score);
+        if (!self.canContinue()) {
+            MessageManger.getInstance.showText("不行了");
+        }
     };
     /** 判断下方块是否使用完，如使用完新生成 */
     GameMainView.prototype.rebuildRanGroup = function () {
@@ -249,6 +252,50 @@ var GameMainView = (function (_super) {
         }
         self.randomTetrisItem();
     };
+    /** 判断是否能继续加块 */
+    GameMainView.prototype.canContinue = function () {
+        var self = this;
+        var result = false;
+        for (var i = 1; i <= LogicManager.RANDOM_COUNT; i++) {
+            var item = self["ranGroup" + i].getChildAt(0);
+            if (item.state == 0 && self.checkItemAddMap(item)) {
+                return true;
+            }
+        }
+        return result;
+    };
+    /** 检测 TetrisItem 能不能放到 Map 中 */
+    GameMainView.prototype.checkItemAddMap = function (item) {
+        var self = this;
+        for (var i = 0; i < LogicManager.MAP_ROW; i++) {
+            if (i > LogicManager.MAP_ROW - item.myShape.length) {
+                return false;
+            }
+            for (var j = 0; j < LogicManager.MAP_COL; j++) {
+                if (j > LogicManager.MAP_COL - item.myShape[0].length) {
+                    break;
+                }
+                if (self.checkMatchShape(i, j, item)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+    /** 从地图的一个点出发往右下延伸一块 TetrisItem 矩形区域，这个区域是否存在与给的 TetrisItem 相匹配的形状 */
+    GameMainView.prototype.checkMatchShape = function (r, c, item) {
+        var self = this;
+        var result = true;
+        for (var i = 0; i < item.myShape.length; i++) {
+            for (var j = 0; j < item.myShape[i].length; j++) {
+                var mapItem = self.mapItemList[i + r][j + c];
+                if (item.myShape[i][j] == 1 && mapItem.state == 1) {
+                    return false;
+                }
+            }
+        }
+        return result;
+    };
     GameMainView.prototype.initOffset = function (sx, sy) {
         this.offSetX = sx - this.moveItem.x;
         this.offSetY = sy - this.moveItem.y;
@@ -260,9 +307,24 @@ var GameMainView = (function (_super) {
         self.moveItem.x = sX - self.offSetX;
         self.moveItem.y = sY - self.offSetY;
     };
-    // private clickhandler(): void {
-    // 	let self = this;
-    // }
+    /** 重新开始游戏 */
+    GameMainView.prototype.restartHandler = function () {
+        var self = this;
+        self.clearMap();
+        self.randomTetrisItem();
+        LogicManager.getInstance.score = 0;
+        self.updataScoreLabel(LogicManager.getInstance.score);
+    };
+    /**清空地图 */
+    GameMainView.prototype.clearMap = function () {
+        var self = this;
+        for (var i = 0; i < LogicManager.MAP_ROW; i++) {
+            for (var j = 0; j < LogicManager.MAP_COL; j++) {
+                var item = self.mapItemList[i][j];
+                item.setIconType(1, 0);
+            }
+        }
+    };
     GameMainView.prototype.createMap = function () {
         var self = this;
         self.mapItemList = [];
