@@ -18,6 +18,8 @@ class LogicManager extends egret.EventDispatcher {
 	/**每次随机出现方块的数量 */
 	public static RANDOM_COUNT: number = 3;
 
+	public score: number = 0;
+
 	public setup(): void {
 		let self = this;
 		EventsManager.getInstance.addEventListener(EventName.ITEM_CLICK, self.onTetrisItemClick, self);

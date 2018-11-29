@@ -7,6 +7,8 @@ class GameMainView extends UI.BaseScene {
 	private ranGroup2: eui.Group;
 	private ranGroup3: eui.Group;
 
+	private scoreLabel: eui.Label;
+
 	private moveItem: TetrisItem = new TetrisItem();
 	private chooseItem: TetrisItem;
 
@@ -17,7 +19,7 @@ class GameMainView extends UI.BaseScene {
 	public addEvents(): void {
 		super.addEvents();
 		let self = this;
-		self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+		// self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
 		self.ranGroup1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -28,7 +30,7 @@ class GameMainView extends UI.BaseScene {
 
 	public removeEvents(): void {
 		let self = this;
-		self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+		// self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
 		self.ranGroup1.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup2.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -53,6 +55,11 @@ class GameMainView extends UI.BaseScene {
 		self.updataMap();
 	}
 
+	private updataScoreLabel(value: number): void {
+		let self = this;
+		self.scoreLabel.text = value + "";
+	}
+
 	/** 更新地图 */
 	private updataMap(): void {
 		let self = this;
@@ -72,6 +79,7 @@ class GameMainView extends UI.BaseScene {
 			for (let j: number = 0; j < LogicManager.MAP_COL; j++) {
 				let item: MapItem = self.mapItemList[i][j];
 				if (item.state == 2) {
+					LogicManager.getInstance.score++;
 					self.updataMapItem(i, j, 1, item.color);
 					result = true;
 				}
@@ -126,6 +134,7 @@ class GameMainView extends UI.BaseScene {
 				let row: number = type == 0 ? indexList[j] : i;
 				let col: number = type == 0 ? i : indexList[j];
 				self.updataMapItem(row, col, 0);
+				LogicManager.getInstance.score++;
 			}
 		}
 
@@ -162,7 +171,7 @@ class GameMainView extends UI.BaseScene {
 		return true;
 	}
 
-	/** 判断 TetrisItem 与地图上非空点是否有重叠 */
+	/** 判断 self.moveItem 与地图上非空点是否有重叠 */
 	private checkOverlap(): boolean {
 		let self = this;
 		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
@@ -177,7 +186,7 @@ class GameMainView extends UI.BaseScene {
 		return false;
 	}
 
-	/** 判断 MapItem 与 moveItem 是否有重叠 */
+	/** 判断 一个MapItem 与 self.moveItem 是否有重叠 */
 	private checkOverlap2(item: MapItem): boolean {
 		let self = this;
 
@@ -246,6 +255,7 @@ class GameMainView extends UI.BaseScene {
 		}
 		self.rebuildRanGroup();
 		self.checkMapBlock();
+		self.updataScoreLabel(LogicManager.getInstance.score);
 	}
 
 	/** 判断下方块是否使用完，如使用完新生成 */
@@ -275,9 +285,9 @@ class GameMainView extends UI.BaseScene {
 		self.moveItem.y = sY - self.offSetY;
 	}
 
-	private clickhandler(): void {
-		let self = this;
-	}
+	// private clickhandler(): void {
+	// 	let self = this;
+	// }
 
 	private createMap(): void {
 		let self = this;

@@ -11,7 +11,9 @@ r.prototype = e.prototype, t.prototype = new r();
 var LogicManager = (function (_super) {
     __extends(LogicManager, _super);
     function LogicManager() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.score = 0;
+        return _this;
     }
     Object.defineProperty(LogicManager, "getInstance", {
         get: function () {

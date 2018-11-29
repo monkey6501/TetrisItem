@@ -22,7 +22,7 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.addEvents = function () {
         _super.prototype.addEvents.call(this);
         var self = this;
-        self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+        // self.addEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
         self.ranGroup1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -32,7 +32,7 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.removeEvents = function () {
         var self = this;
-        self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
+        // self.removeEventListener(egret.TouchEvent.TOUCH_TAP, self.clickhandler, self);
         self.ranGroup1.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup2.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
@@ -54,6 +54,10 @@ var GameMainView = (function (_super) {
             return;
         self.updataMap();
     };
+    GameMainView.prototype.updataScoreLabel = function (value) {
+        var self = this;
+        self.scoreLabel.text = value + "";
+    };
     /** 更新地图 */
     GameMainView.prototype.updataMap = function () {
         var self = this;
@@ -72,6 +76,7 @@ var GameMainView = (function (_super) {
             for (var j = 0; j < LogicManager.MAP_COL; j++) {
                 var item = self.mapItemList[i][j];
                 if (item.state == 2) {
+                    LogicManager.getInstance.score++;
                     self.updataMapItem(i, j, 1, item.color);
                     result = true;
                 }
@@ -123,6 +128,7 @@ var GameMainView = (function (_super) {
                 var row = type == 0 ? indexList[j] : i;
                 var col = type == 0 ? i : indexList[j];
                 self.updataMapItem(row, col, 0);
+                LogicManager.getInstance.score++;
             }
         }
     };
@@ -155,7 +161,7 @@ var GameMainView = (function (_super) {
         }
         return true;
     };
-    /** 判断 TetrisItem 与地图上非空点是否有重叠 */
+    /** 判断 self.moveItem 与地图上非空点是否有重叠 */
     GameMainView.prototype.checkOverlap = function () {
         var self = this;
         for (var i = 0; i < LogicManager.MAP_ROW; i++) {
@@ -168,7 +174,7 @@ var GameMainView = (function (_super) {
         }
         return false;
     };
-    /** 判断 MapItem 与 moveItem 是否有重叠 */
+    /** 判断 一个MapItem 与 self.moveItem 是否有重叠 */
     GameMainView.prototype.checkOverlap2 = function (item) {
         var self = this;
         var len = self.moveItem.itemList.length;
@@ -230,6 +236,7 @@ var GameMainView = (function (_super) {
         }
         self.rebuildRanGroup();
         self.checkMapBlock();
+        self.updataScoreLabel(LogicManager.getInstance.score);
     };
     /** 判断下方块是否使用完，如使用完新生成 */
     GameMainView.prototype.rebuildRanGroup = function () {
@@ -253,9 +260,9 @@ var GameMainView = (function (_super) {
         self.moveItem.x = sX - self.offSetX;
         self.moveItem.y = sY - self.offSetY;
     };
-    GameMainView.prototype.clickhandler = function () {
-        var self = this;
-    };
+    // private clickhandler(): void {
+    // 	let self = this;
+    // }
     GameMainView.prototype.createMap = function () {
         var self = this;
         self.mapItemList = [];
