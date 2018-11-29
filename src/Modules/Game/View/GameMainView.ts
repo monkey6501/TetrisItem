@@ -186,7 +186,7 @@ class GameMainView extends UI.BaseScene {
 			let len2: number = self.moveItem.itemList[i].length;
 			for (let j: number = 0; j < len2; j++) {
 				let block: BlockItem = self.moveItem.itemList[i][j];
-				if (LogicManager.getInstance.inTouchArea(block.x + self.moveItem.x, block.y + self.moveItem.y, item)) {
+				if (LogicManager.getInstance.inTouchArea(block.x + self.moveItem.x, block.y + self.moveItem.y, block.width, block.height, item)) {
 					return true;
 				}
 			}
@@ -207,7 +207,7 @@ class GameMainView extends UI.BaseScene {
 				let len2: number = tetris.itemList[i].length;
 				for (let j: number = 0; j < len2; j++) {
 					let block: BlockItem = tetris.itemList[i][j];
-					if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, item)) {
+					if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, block.width, block.height, item)) {
 						self.updataMapItem(item.row, item.col, 2, block.iconColor);
 						return;
 					}

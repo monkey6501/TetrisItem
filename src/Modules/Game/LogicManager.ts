@@ -26,7 +26,7 @@ class LogicManager extends egret.EventDispatcher {
 	private onTetrisItemClick(e: egret.Event): void {
 		let self = this;
 		//e.data
-		
+
 	}
 
 	/**map里面的 TetrisItem 是否出了map */
@@ -37,7 +37,7 @@ class LogicManager extends egret.EventDispatcher {
 			let len2: number = tetris.itemList[i].length;
 			for (let j: number = 0; j < len2; j++) {
 				let block: BlockItem = tetris.itemList[i][j];
-				if (block.x + tetris.x < 0 || block.x + tetris.x >= block.width * LogicManager.MAP_ROW || block.y + tetris.y < 0 || block.y + tetris.y >= block.height * LogicManager.MAP_COL) {
+				if (block.x + tetris.x + block.width / 2 < 0 || block.x + tetris.x + block.width / 2 >= block.width * LogicManager.MAP_ROW || block.y + tetris.y + block.height / 2 < 0 || block.y + tetris.y + block.height / 2 >= block.height * LogicManager.MAP_COL) {
 					return true;
 				}
 			}
@@ -46,11 +46,12 @@ class LogicManager extends egret.EventDispatcher {
 	}
 
 	/** (sx,sy)这个点是否在这个MapItem中 */
-	public inTouchArea(sx: number, sy: number, item: MapItem): boolean {
-		if (sx >= item.x && sx < item.x + item.width && sy >= item.y && sy < item.y + item.height) {
+	public inTouchArea(sx: number, sy: number, sw: number, sh: number, item: MapItem): boolean {
+		if (sx + sw / 2 >= item.x && sx + sw / 2 < item.x + item.width && sy + sh / 2 >= item.y && sy + sh / 2 < item.y + item.height) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+
 }

@@ -176,7 +176,7 @@ var GameMainView = (function (_super) {
             var len2 = self.moveItem.itemList[i].length;
             for (var j = 0; j < len2; j++) {
                 var block = self.moveItem.itemList[i][j];
-                if (LogicManager.getInstance.inTouchArea(block.x + self.moveItem.x, block.y + self.moveItem.y, item)) {
+                if (LogicManager.getInstance.inTouchArea(block.x + self.moveItem.x, block.y + self.moveItem.y, block.width, block.height, item)) {
                     return true;
                 }
             }
@@ -195,7 +195,7 @@ var GameMainView = (function (_super) {
                 var len2 = tetris.itemList[i].length;
                 for (var j = 0; j < len2; j++) {
                     var block = tetris.itemList[i][j];
-                    if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, item)) {
+                    if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, block.width, block.height, item)) {
                         self.updataMapItem(item.row, item.col, 2, block.iconColor);
                         return;
                     }
