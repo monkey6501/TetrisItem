@@ -76,37 +76,23 @@ class GameMainView extends UI.BaseScene {
 		}
 	}
 
-	/** 出现锤子，更新地图 */
-	private updataHammerMap(): void {
-		let self = this;
-		self.checkHammerMapItem(self.findItemByHammer());
-	}
-
 	/**通过锤子坐标找到对应的 MapItem */
 	private findItemByHammer(): MapItem {
 		let self = this;
-		let item: MapItem = self.mapItemList[1][1];
-		//这个item 的x就是item的宽度，y就是item的高度
-		let c: number = Math.floor(self.hammer.x / item.x);
+		let item: MapItem = self.mapItemList[1][1];//这个item 的x就是item的宽度，y就是item的高度
 		let r: number = Math.floor(self.hammer.y / item.y);
+		let c: number = Math.floor(self.hammer.x / item.x);
 		if (LogicManager.getInstance.betweenTwoNumber(r, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(c, 0, LogicManager.MAP_COL - 1)) {
 			return self.mapItemList[r][c];
 		} else {
-			return null
+			return null;
 		}
 	}
 
-	/**
-	 * 根据锤子位置检测地图，并更新地图小格子。
-	 * 
-	 */
+	/** 根据锤子位置检测地图，并更新地图小格子。 */
 	private checkHammerMapItem(item: MapItem): void {
 		let self = this;
-		if (item) {
-			self.destroyPos = { row: item.row, col: item.col };
-		} else {
-			self.destroyPos = null;
-		}
+		self.destroyPos = item ? { row: item.row, col: item.col } : null;
 		self.showDestroyArea(item);
 	}
 
@@ -212,7 +198,6 @@ class GameMainView extends UI.BaseScene {
 
 	/** 
 	 * 设置地图上的 Item 状态
-	 * 
 	 * 行 -- 列 -- 状态 -- 颜色
 	*/
 	private updataMapItem(row: number, col: number, state: number, color: number = 1): void {
@@ -244,14 +229,12 @@ class GameMainView extends UI.BaseScene {
 				}
 			}
 		}
-
 		return false;
 	}
 
 	/** 判断 一个MapItem 与 self.moveItem 是否有重叠 */
 	private checkOverlap2(item: MapItem): boolean {
 		let self = this;
-
 		let len: number = self.moveItem.itemList.length;
 		for (let i: number = 0; i < len; i++) {
 			let len2: number = self.moveItem.itemList[i].length;
@@ -262,13 +245,11 @@ class GameMainView extends UI.BaseScene {
 				}
 			}
 		}
-
 		return false;
 	}
 
 	/**
 	 * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
-	 * 
 	 */
 	private checkMapItem(tetris: TetrisItem, item: MapItem): void {
 		let self = this;
@@ -285,7 +266,6 @@ class GameMainView extends UI.BaseScene {
 				}
 			}
 		}
-
 		if (item.state == 2) {
 			self.updataMapItem(item.row, item.col, 0);
 		}
@@ -326,24 +306,21 @@ class GameMainView extends UI.BaseScene {
 			self.moveItem.y = sY - self.offSetY;
 			self.updataMap();
 		}
-
 		if (self.hammer.visible) {
 			self.hammer.x = sX - self.offSetX1;
 			self.hammer.y = sY - self.offSetY1;
-			self.updataHammerMap();
+			self.checkHammerMapItem(self.findItemByHammer());
 		}
 	}
 
 	private touchEndHandler(): void {
 		let self = this;
 		self.moveItem.visible = false;
-
 		if (self.hammer.visible) {
 			self.hammerRelease();
 			self.hammer.visible = false;
 			return;
 		}
-
 		if (self.touchEndMapItem()) {
 			self.chooseItem.state = 1;
 		}
@@ -452,14 +429,20 @@ class GameMainView extends UI.BaseScene {
 	private hammerRelease(): void {
 		let self = this;
 		if (!self.destroyPos) return;
+		let destroyCount: number = 0;
 		for (let i: number = self.destroyPos.row - LogicManager.HAMMER_AREA; i <= self.destroyPos.row + LogicManager.HAMMER_AREA; i++) {
 			for (let j: number = self.destroyPos.col - LogicManager.HAMMER_AREA; j <= self.destroyPos.col + LogicManager.HAMMER_AREA; j++) {
 				if (LogicManager.getInstance.betweenTwoNumber(i, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(j, 0, LogicManager.MAP_COL - 1)) {
+					let item: MapItem = self.mapItemList[i][j];
+					if (item.state == 1) {
+						destroyCount++;
+					}
 					self.updataMapItem(i, j, 0);
 				}
 			}
 		}
-		LogicManager.getInstance.hammerTimes--;
+		if (destroyCount > 0)
+			LogicManager.getInstance.hammerTimes--;
 	}
 
 	/**清空地图 */

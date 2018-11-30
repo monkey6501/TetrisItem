@@ -71,18 +71,12 @@ var GameMainView = (function (_super) {
             }
         }
     };
-    /** 出现锤子，更新地图 */
-    GameMainView.prototype.updataHammerMap = function () {
-        var self = this;
-        self.checkHammerMapItem(self.findItemByHammer());
-    };
     /**通过锤子坐标找到对应的 MapItem */
     GameMainView.prototype.findItemByHammer = function () {
         var self = this;
-        var item = self.mapItemList[1][1];
-        //这个item 的x就是item的宽度，y就是item的高度
-        var c = Math.floor(self.hammer.x / item.x);
+        var item = self.mapItemList[1][1]; //这个item 的x就是item的宽度，y就是item的高度
         var r = Math.floor(self.hammer.y / item.y);
+        var c = Math.floor(self.hammer.x / item.x);
         if (LogicManager.getInstance.betweenTwoNumber(r, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(c, 0, LogicManager.MAP_COL - 1)) {
             return self.mapItemList[r][c];
         }
@@ -90,21 +84,10 @@ var GameMainView = (function (_super) {
             return null;
         }
     };
-    /**
-     * 根据锤子位置检测地图，并更新地图小格子。
-     *
-     */
+    /** 根据锤子位置检测地图，并更新地图小格子。 */
     GameMainView.prototype.checkHammerMapItem = function (item) {
         var self = this;
-        if (item) {
-            self.destroyPos = { row: item.row, col: item.col };
-            console.log("hammer:", self.destroyPos);
-        }
-        else {
-            self.destroyPos = null;
-            // if (item)
-            // 	console.log("hammer over", self.hammer.x, self.hammer.y, self.hammer.width, self.hammer.height, item.x, item.y, item.width, item.height)
-        }
+        self.destroyPos = item ? { row: item.row, col: item.col } : null;
         self.showDestroyArea(item);
     };
     /** 展示销毁面积 */
@@ -201,7 +184,6 @@ var GameMainView = (function (_super) {
     };
     /**
      * 设置地图上的 Item 状态
-     *
      * 行 -- 列 -- 状态 -- 颜色
     */
     GameMainView.prototype.updataMapItem = function (row, col, state, color) {
@@ -251,7 +233,6 @@ var GameMainView = (function (_super) {
     };
     /**
      * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
-     *
      */
     GameMainView.prototype.checkMapItem = function (tetris, item) {
         var self = this;
@@ -304,7 +285,7 @@ var GameMainView = (function (_super) {
         if (self.hammer.visible) {
             self.hammer.x = sX - self.offSetX1;
             self.hammer.y = sY - self.offSetY1;
-            self.updataHammerMap();
+            self.checkHammerMapItem(self.findItemByHammer());
         }
     };
     GameMainView.prototype.touchEndHandler = function () {
@@ -414,19 +395,22 @@ var GameMainView = (function (_super) {
     /**释放锤子 */
     GameMainView.prototype.hammerRelease = function () {
         var self = this;
-        console.log("over");
-        console.log(self.destroyPos);
         if (!self.destroyPos)
             return;
-        console.log("over1");
+        var destroyCount = 0;
         for (var i = self.destroyPos.row - LogicManager.HAMMER_AREA; i <= self.destroyPos.row + LogicManager.HAMMER_AREA; i++) {
             for (var j = self.destroyPos.col - LogicManager.HAMMER_AREA; j <= self.destroyPos.col + LogicManager.HAMMER_AREA; j++) {
                 if (LogicManager.getInstance.betweenTwoNumber(i, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(j, 0, LogicManager.MAP_COL - 1)) {
+                    var item = self.mapItemList[i][j];
+                    if (item.state == 1) {
+                        destroyCount++;
+                    }
                     self.updataMapItem(i, j, 0);
                 }
             }
         }
-        LogicManager.getInstance.hammerTimes--;
+        if (destroyCount > 0)
+            LogicManager.getInstance.hammerTimes--;
     };
     /**清空地图 */
     GameMainView.prototype.clearMap = function () {
