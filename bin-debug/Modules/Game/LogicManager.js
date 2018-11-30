@@ -14,6 +14,9 @@ var LogicManager = (function (_super) {
         var _this = _super.call(this) || this;
         /**锤子使用次数 */
         _this.hammerTimes = 1;
+        /**刷新功能使用次数 */
+        _this.refreshTimes = 2;
+        /**获得的积分 */
         _this.score = 0;
         return _this;
     }
@@ -76,6 +79,10 @@ var LogicManager = (function (_super) {
     LogicManager.RANDOM_COUNT = 3;
     /**锤子敲碎正方形延伸的范围 */
     LogicManager.HAMMER_AREA = 1;
+    /**锤子的基础使用次数 */
+    LogicManager.HAMMER_TIMES = 1;
+    /**刷新的基础使用次数 */
+    LogicManager.REFRESH_TIMES = 2;
     return LogicManager;
 }(egret.EventDispatcher));
 __reflect(LogicManager.prototype, "LogicManager");

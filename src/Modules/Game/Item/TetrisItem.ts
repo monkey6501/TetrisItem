@@ -53,9 +53,9 @@ class TetrisItem extends eui.Component {
 	private shapeLen: number = 0;
 	public myShape: any[] = [];
 	public ranColor: number;
-	/** 0:没有使用  1:已经使用  */
+	/** 0:没有使用  1:已经使用 */
 	public state: number = 0;
-
+	private _canUse: boolean = true;
 	public itemList: BlockItem[][] = [];
 
 	public constructor() {
@@ -86,6 +86,16 @@ class TetrisItem extends eui.Component {
 		self.shapeLen = self.weightList.length;
 		for (let i: number = 0; i < self.shapeLen; i++) {
 			self.totalWeight += self.weightList[i];
+		}
+	}
+
+	public set canUse(value: boolean) {
+		let self = this;
+		self._canUse = value;
+		if (self._canUse) {
+			self.filters = null;
+		} else {
+			UIUtil.setFilters(self);
 		}
 	}
 

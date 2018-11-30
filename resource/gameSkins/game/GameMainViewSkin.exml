@@ -6,6 +6,8 @@
 	<e:Button id="refreshBtn" label="刷新" x="454" y="1054"/>
 	<e:Label text="score:" x="110" y="63"/>
 	<e:Label id="scoreLabel" text="0" x="200" y="65"/>
+	<e:Label id="hammerLabel" text="0" x="195" y="1064"/>
+	<e:Label id="refreshLabel" text="0" x="565" y="1064"/>
 	<e:Group id="mapGroup" y="107" anchorOffsetX="0" x="80">
 	</e:Group>
 	<e:Group id="ranGroup1" width="200" height="200" y="811" anchorOffsetX="0" anchorOffsetY="0" x="0">

@@ -56,10 +56,8 @@ var GameMainView = (function (_super) {
         self.hammer.source = "game_json.icon1";
         self.hammer.visible = false;
         self.moveItem.visible = false;
-    };
-    GameMainView.prototype.updataScoreLabel = function (value) {
-        var self = this;
-        self.scoreLabel.text = value + "";
+        self.hammerLabel.text = LogicManager.HAMMER_TIMES + "";
+        self.refreshLabel.text = LogicManager.REFRESH_TIMES + "";
     };
     /** 出现移动块，更新地图 */
     GameMainView.prototype.updataMap = function () {
@@ -290,12 +288,15 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.touchEndHandler = function () {
         var self = this;
-        self.moveItem.visible = false;
         if (self.hammer.visible) {
             self.hammerRelease();
             self.hammer.visible = false;
             return;
         }
+        if (!self.moveItem.visible) {
+            return;
+        }
+        self.moveItem.visible = false;
         if (self.touchEndMapItem()) {
             self.chooseItem.state = 1;
         }
@@ -305,9 +306,9 @@ var GameMainView = (function (_super) {
         }
         self.rebuildRanGroup();
         self.checkMapBlock();
-        self.updataScoreLabel(LogicManager.getInstance.score);
+        self.scoreLabel.text = LogicManager.getInstance.score + "";
         if (!self.canContinue()) {
-            MessageManger.getInstance.showText("不行了");
+            MessageManger.getInstance.showText("没有可以放入的");
         }
     };
     /** 判断下方块是否使用完，如使用完新生成 */
@@ -371,8 +372,11 @@ var GameMainView = (function (_super) {
         self.clearMap();
         self.randomTetrisItem();
         LogicManager.getInstance.score = 0;
-        LogicManager.getInstance.hammerTimes = 1;
-        self.updataScoreLabel(LogicManager.getInstance.score);
+        LogicManager.getInstance.hammerTimes = LogicManager.HAMMER_TIMES;
+        LogicManager.getInstance.refreshTimes = LogicManager.REFRESH_TIMES;
+        self.hammerLabel.text = LogicManager.getInstance.hammerTimes + "";
+        self.scoreLabel.text = LogicManager.getInstance.score + "";
+        self.refreshLabel.text = LogicManager.getInstance.refreshTimes + "";
     };
     /** 销毁地图格子 */
     GameMainView.prototype.destroyBtnHandler = function (e) {
@@ -384,13 +388,20 @@ var GameMainView = (function (_super) {
             self.initHarmmerOffset(e.stageX, e.stageY);
         }
         else {
-            MessageManger.getInstance.showText("hammer over");
+            MessageManger.getInstance.showText("锤子已经使用完");
         }
     };
     /** 刷新待放入块 */
     GameMainView.prototype.refreshBtnHandler = function () {
         var self = this;
-        self.randomTetrisItem();
+        if (LogicManager.getInstance.refreshTimes > 0) {
+            LogicManager.getInstance.refreshTimes--;
+            self.refreshLabel.text = LogicManager.getInstance.refreshTimes + "";
+            self.randomTetrisItem();
+        }
+        else {
+            MessageManger.getInstance.showText("刷新已经使用完");
+        }
     };
     /**释放锤子 */
     GameMainView.prototype.hammerRelease = function () {
@@ -409,8 +420,10 @@ var GameMainView = (function (_super) {
                 }
             }
         }
-        if (destroyCount > 0)
+        if (destroyCount > 0) {
             LogicManager.getInstance.hammerTimes--;
+            self.hammerLabel.text = LogicManager.getInstance.hammerTimes + "";
+        }
     };
     /**清空地图 */
     GameMainView.prototype.clearMap = function () {

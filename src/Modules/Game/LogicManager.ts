@@ -19,10 +19,16 @@ class LogicManager extends egret.EventDispatcher {
 	public static RANDOM_COUNT: number = 3;
 	/**锤子敲碎正方形延伸的范围 */
 	public static HAMMER_AREA: number = 1;
+	/**锤子的基础使用次数 */
+	public static HAMMER_TIMES: number = 1;
+	/**刷新的基础使用次数 */
+	public static REFRESH_TIMES: number = 2;
 
 	/**锤子使用次数 */
 	public hammerTimes: number = 1;
-
+	/**刷新功能使用次数 */
+	public refreshTimes: number = 2;
+	/**获得的积分 */
 	public score: number = 0;
 
 	public setup(): void {

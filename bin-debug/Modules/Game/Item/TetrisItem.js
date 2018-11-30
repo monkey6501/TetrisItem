@@ -57,8 +57,9 @@ var TetrisItem = (function (_super) {
         _this.totalWeight = 0;
         _this.shapeLen = 0;
         _this.myShape = [];
-        /** 0:没有使用  1:已经使用  */
+        /** 0:没有使用  1:已经使用 */
         _this.state = 0;
+        _this._canUse = true;
         _this.itemList = [];
         _this.skinName = SkinName.TetrisItemSkin;
         return _this;
@@ -86,6 +87,20 @@ var TetrisItem = (function (_super) {
             self.totalWeight += self.weightList[i];
         }
     };
+    Object.defineProperty(TetrisItem.prototype, "canUse", {
+        set: function (value) {
+            var self = this;
+            self._canUse = value;
+            if (self._canUse) {
+                self.filters = null;
+            }
+            else {
+                UIUtil.setFilters(self);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**获取随机形状的index */
     TetrisItem.prototype.getRandomShape = function () {
         var self = this;
