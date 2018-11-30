@@ -162,8 +162,8 @@ var Main = (function (_super) {
             document.getElementById("circleId").style.display = "none";
         }
         LoginManager.getInstance.setup();
+        ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.LoginView), LayerManager.GAME_MAP_LAYER, true);
         if (ext.getPlatform() == "dev") {
-            ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.LoginView), LayerManager.GAME_MAP_LAYER, true);
         }
         else {
         }

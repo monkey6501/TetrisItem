@@ -42,9 +42,9 @@ class Main extends eui.UILayer {
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
 
         self.initData();
-        ext.loadServerConfig(() => {
+        // ext.loadServerConfig(() => {
             self.initPlatform();
-        })
+        // })
     }
 
     /** 初始化数据 */
@@ -74,7 +74,7 @@ class Main extends eui.UILayer {
 
     private initPlatform() {
         let self = this;
-        PathManager.Instance.resourceUrl = ext.getResourceUrl();
+        PathManager.Instance.resourceUrl = "resource/"//ext.getResourceUrl();
         self.loadConfigs();
     }
 
@@ -92,7 +92,7 @@ class Main extends eui.UILayer {
         let self = this;
         ResUtil.getInstance.loadGroup(["game"], () => {
             // GlobleData.getInstance.setup(() => {
-                self.loadTheme();
+            self.loadTheme();
             // });
         }, self);
     }
@@ -117,8 +117,8 @@ class Main extends eui.UILayer {
             document.getElementById("circleId").style.display = "none";
         }
         LoginManager.getInstance.setup();
+        ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.LoginView), LayerManager.GAME_MAP_LAYER, true);
         if (ext.getPlatform() == "dev") {
-            ScenesManager.getInstance.openView(UIUtil.createScene(ViewClassName.LoginView), LayerManager.GAME_MAP_LAYER, true);
         }
         else {
         }

@@ -23,7 +23,7 @@ var isServerList = true;
 
 function loadServerConfig(callback) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', './serverConfig.json?v=' + window["version"], true);
+	xhr.open('GET', 'serverConfig.json?v=' + window["version"], true);
 	function loadComplete() {
 		xhr.removeEventListener("load", loadComplete);
 		var serverConfigData = JSON.parse(xhr.response);
