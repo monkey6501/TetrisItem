@@ -20,6 +20,9 @@ class LogicManager extends egret.EventDispatcher {
 	/**锤子敲碎正方形延伸的范围 */
 	public static HAMMER_AREA: number = 1;
 
+	/**锤子使用次数 */
+	public hammerTimes: number = 1;
+
 	public score: number = 0;
 
 	public setup(): void {
@@ -49,8 +52,8 @@ class LogicManager extends egret.EventDispatcher {
 		return false;
 	}
 
-	/** (sx,sy)这个点是否在这个MapItem中 */
-	public inTouchArea(sx: number, sy: number, sw: number, sh: number, item: MapItem): boolean {
+	/** 一个形状的中心点是否在 item 区域中 */
+	public inTouchArea(sx: number, sy: number, sw: number, sh: number, item: egret.DisplayObjectContainer): boolean {
 		if (sx + sw / 2 >= item.x && sx + sw / 2 < item.x + item.width && sy + sh / 2 >= item.y && sy + sh / 2 < item.y + item.height) {
 			return true;
 		} else {
@@ -62,7 +65,7 @@ class LogicManager extends egret.EventDispatcher {
 	public betweenTwoNumber(value: number, min: number, max: number): boolean {
 		if (value >= min && value <= max) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

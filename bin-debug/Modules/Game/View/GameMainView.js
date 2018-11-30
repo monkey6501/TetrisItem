@@ -34,7 +34,6 @@ var GameMainView = (function (_super) {
         self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.addEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
         self.addEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
-        App.TimerManager.doFrame(6, 0, self.enterHandler, self);
     };
     GameMainView.prototype.removeEvents = function () {
         var self = this;
@@ -46,7 +45,6 @@ var GameMainView = (function (_super) {
         self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.removeEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
         self.removeEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
-        App.TimerManager.remove(self.enterHandler, self);
     };
     GameMainView.prototype.show = function () {
         _super.prototype.show.call(this);
@@ -58,15 +56,6 @@ var GameMainView = (function (_super) {
         self.hammer.source = "game_json.icon1";
         self.hammer.visible = false;
         self.moveItem.visible = false;
-    };
-    GameMainView.prototype.enterHandler = function () {
-        var self = this;
-        if (self.moveItem.visible) {
-            self.updataMap();
-        }
-        if (self.hammer.visible) {
-            self.updataHammerMap();
-        }
     };
     GameMainView.prototype.updataScoreLabel = function (value) {
         var self = this;
@@ -85,11 +74,20 @@ var GameMainView = (function (_super) {
     /** 出现锤子，更新地图 */
     GameMainView.prototype.updataHammerMap = function () {
         var self = this;
-        for (var i = 0; i < LogicManager.MAP_ROW; i++) {
-            for (var j = 0; j < LogicManager.MAP_COL; j++) {
-                var item = self.mapItemList[i][j];
-                self.checkHammerMapItem(item);
-            }
+        self.checkHammerMapItem(self.findItemByHammer());
+    };
+    /**通过锤子坐标找到对应的 MapItem */
+    GameMainView.prototype.findItemByHammer = function () {
+        var self = this;
+        var item = self.mapItemList[1][1];
+        //这个item 的x就是item的宽度，y就是item的高度
+        var c = Math.floor(self.hammer.x / item.x);
+        var r = Math.floor(self.hammer.y / item.y);
+        if (LogicManager.getInstance.betweenTwoNumber(r, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(c, 0, LogicManager.MAP_COL - 1)) {
+            return self.mapItemList[r][c];
+        }
+        else {
+            return null;
         }
     };
     /**
@@ -98,15 +96,16 @@ var GameMainView = (function (_super) {
      */
     GameMainView.prototype.checkHammerMapItem = function (item) {
         var self = this;
-        if (self.checkHammerInMap()) {
-            if (LogicManager.getInstance.inTouchArea(self.hammer.x, self.hammer.y, self.hammer.width, self.hammer.height, item)) {
-                item.showDestroyShadow(1);
-                self.showDestroyArea(item);
-                self.destroyPos = { row: item.row, col: item.col };
-                console.log(item.row, item.col);
-                return;
-            }
+        if (item) {
+            self.destroyPos = { row: item.row, col: item.col };
+            console.log("hammer:", self.destroyPos);
         }
+        else {
+            self.destroyPos = null;
+            // if (item)
+            // 	console.log("hammer over", self.hammer.x, self.hammer.y, self.hammer.width, self.hammer.height, item.x, item.y, item.width, item.height)
+        }
+        self.showDestroyArea(item);
     };
     /** 展示销毁面积 */
     GameMainView.prototype.showDestroyArea = function (item) {
@@ -114,7 +113,7 @@ var GameMainView = (function (_super) {
         for (var i = 0; i < LogicManager.MAP_ROW; i++) {
             for (var j = 0; j < LogicManager.MAP_COL; j++) {
                 var mapItem = self.mapItemList[i][j];
-                if (LogicManager.getInstance.betweenTwoNumber(i, item.row - LogicManager.HAMMER_AREA, item.row + LogicManager.HAMMER_AREA) &&
+                if (item && LogicManager.getInstance.betweenTwoNumber(i, item.row - LogicManager.HAMMER_AREA, item.row + LogicManager.HAMMER_AREA) &&
                     LogicManager.getInstance.betweenTwoNumber(j, item.col - LogicManager.HAMMER_AREA, item.col + LogicManager.HAMMER_AREA)) {
                     mapItem.showDestroyShadow(1);
                 }
@@ -127,7 +126,7 @@ var GameMainView = (function (_super) {
     /**检测锤子是否在地图上 */
     GameMainView.prototype.checkHammerInMap = function () {
         var self = this;
-        return true;
+        return LogicManager.getInstance.inTouchArea(self.hammer.x + self.mapGroup.x, self.hammer.y + self.mapGroup.y, self.hammer.width, self.hammer.height, self.mapGroup);
     };
     /** TOUCH_END 后把阴影的方块固定 */
     GameMainView.prototype.touchEndMapItem = function () {
@@ -300,10 +299,12 @@ var GameMainView = (function (_super) {
         if (self.moveItem.visible) {
             self.moveItem.x = sX - self.offSetX;
             self.moveItem.y = sY - self.offSetY;
+            self.updataMap();
         }
         if (self.hammer.visible) {
             self.hammer.x = sX - self.offSetX1;
             self.hammer.y = sY - self.offSetY1;
+            self.updataHammerMap();
         }
     };
     GameMainView.prototype.touchEndHandler = function () {
@@ -389,15 +390,21 @@ var GameMainView = (function (_super) {
         self.clearMap();
         self.randomTetrisItem();
         LogicManager.getInstance.score = 0;
+        LogicManager.getInstance.hammerTimes = 1;
         self.updataScoreLabel(LogicManager.getInstance.score);
     };
     /** 销毁地图格子 */
     GameMainView.prototype.destroyBtnHandler = function (e) {
         var self = this;
-        self.hammer.visible = true;
-        self.hammer.x = self.mapGroup.x;
-        self.hammer.y = 500;
-        self.initHarmmerOffset(e.stageX, e.stageY);
+        if (LogicManager.getInstance.hammerTimes > 0) {
+            self.hammer.visible = true;
+            self.hammer.x = e.stageX - self.mapGroup.x;
+            self.hammer.y = 600;
+            self.initHarmmerOffset(e.stageX, e.stageY);
+        }
+        else {
+            MessageManger.getInstance.showText("hammer over");
+        }
     };
     /** 刷新待放入块 */
     GameMainView.prototype.refreshBtnHandler = function () {
@@ -407,6 +414,11 @@ var GameMainView = (function (_super) {
     /**释放锤子 */
     GameMainView.prototype.hammerRelease = function () {
         var self = this;
+        console.log("over");
+        console.log(self.destroyPos);
+        if (!self.destroyPos)
+            return;
+        console.log("over1");
         for (var i = self.destroyPos.row - LogicManager.HAMMER_AREA; i <= self.destroyPos.row + LogicManager.HAMMER_AREA; i++) {
             for (var j = self.destroyPos.col - LogicManager.HAMMER_AREA; j <= self.destroyPos.col + LogicManager.HAMMER_AREA; j++) {
                 if (LogicManager.getInstance.betweenTwoNumber(i, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(j, 0, LogicManager.MAP_COL - 1)) {
@@ -414,6 +426,7 @@ var GameMainView = (function (_super) {
                 }
             }
         }
+        LogicManager.getInstance.hammerTimes--;
     };
     /**清空地图 */
     GameMainView.prototype.clearMap = function () {

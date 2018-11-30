@@ -12,6 +12,8 @@ var LogicManager = (function (_super) {
     __extends(LogicManager, _super);
     function LogicManager() {
         var _this = _super.call(this) || this;
+        /**锤子使用次数 */
+        _this.hammerTimes = 1;
         _this.score = 0;
         return _this;
     }
@@ -48,7 +50,7 @@ var LogicManager = (function (_super) {
         }
         return false;
     };
-    /** (sx,sy)这个点是否在这个MapItem中 */
+    /** 一个形状的中心点是否在 item 区域中 */
     LogicManager.prototype.inTouchArea = function (sx, sy, sw, sh, item) {
         if (sx + sw / 2 >= item.x && sx + sw / 2 < item.x + item.width && sy + sh / 2 >= item.y && sy + sh / 2 < item.y + item.height) {
             return true;
