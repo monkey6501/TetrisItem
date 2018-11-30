@@ -254,7 +254,7 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.touchBeginHandler = function (e) {
         var self = this;
         self.chooseItem = e.currentTarget.getChildAt(0);
-        if (self.chooseItem.state == 1)
+        if (self.chooseItem.state == 1 || !self.chooseItem.canUse)
             return;
         e.currentTarget.getChildAt(0).visible = false;
         self.moveItem.creatShape(self.chooseItem.myShape, self.chooseItem.ranColor);
@@ -291,6 +291,7 @@ var GameMainView = (function (_super) {
         if (self.hammer.visible) {
             self.hammerRelease();
             self.hammer.visible = false;
+            self.updataTetrisFilter();
             return;
         }
         if (!self.moveItem.visible) {
@@ -310,6 +311,7 @@ var GameMainView = (function (_super) {
         if (!self.canContinue()) {
             MessageManger.getInstance.showText("没有可以放入的");
         }
+        self.updataTetrisFilter();
     };
     /** 判断下方块是否使用完，如使用完新生成 */
     GameMainView.prototype.rebuildRanGroup = function () {
@@ -321,6 +323,7 @@ var GameMainView = (function (_super) {
             }
         }
         self.randomTetrisItem();
+        self.updataTetrisFilter();
     };
     /** 判断是否能继续加块 */
     GameMainView.prototype.canContinue = function () {
@@ -351,6 +354,14 @@ var GameMainView = (function (_super) {
             }
         }
         return false;
+    };
+    /**更新下面块的filter */
+    GameMainView.prototype.updataTetrisFilter = function () {
+        var self = this;
+        for (var i = 1; i <= LogicManager.RANDOM_COUNT; i++) {
+            var item = self["ranGroup" + i].getChildAt(0);
+            item.canUse = item.state == 0 && self.checkItemAddMap(item);
+        }
     };
     /** 从地图的一个点出发往右下延伸一块 TetrisItem 矩形区域，这个区域是否存在与给的 TetrisItem 相匹配的形状 */
     GameMainView.prototype.checkMatchShape = function (r, c, item) {
@@ -398,6 +409,7 @@ var GameMainView = (function (_super) {
             LogicManager.getInstance.refreshTimes--;
             self.refreshLabel.text = LogicManager.getInstance.refreshTimes + "";
             self.randomTetrisItem();
+            self.updataTetrisFilter();
         }
         else {
             MessageManger.getInstance.showText("刷新已经使用完");

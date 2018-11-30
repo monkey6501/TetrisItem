@@ -273,7 +273,7 @@ class GameMainView extends UI.BaseScene {
 	private touchBeginHandler(e: egret.TouchEvent): void {
 		let self = this;
 		self.chooseItem = e.currentTarget.getChildAt(0);
-		if (self.chooseItem.state == 1) return;
+		if (self.chooseItem.state == 1 || !self.chooseItem.canUse) return;
 		e.currentTarget.getChildAt(0).visible = false;
 		self.moveItem.creatShape(self.chooseItem.myShape, self.chooseItem.ranColor);
 		self.moveItem.x = self.chooseItem.x + e.currentTarget.x - self.mapGroup.x;
@@ -317,6 +317,7 @@ class GameMainView extends UI.BaseScene {
 		if (self.hammer.visible) {
 			self.hammerRelease();
 			self.hammer.visible = false;
+			self.updataTetrisFilter();
 			return;
 		}
 		if (!self.moveItem.visible) {
@@ -337,6 +338,7 @@ class GameMainView extends UI.BaseScene {
 		if (!self.canContinue()) {
 			MessageManger.getInstance.showText("没有可以放入的");
 		}
+		self.updataTetrisFilter();
 	}
 
 	/** 判断下方块是否使用完，如使用完新生成 */
@@ -349,6 +351,7 @@ class GameMainView extends UI.BaseScene {
 			}
 		}
 		self.randomTetrisItem();
+		self.updataTetrisFilter();
 	}
 
 	/** 判断是否能继续加块 */
@@ -381,6 +384,15 @@ class GameMainView extends UI.BaseScene {
 			}
 		}
 		return false;
+	}
+
+	/**更新下面块的filter */
+	private updataTetrisFilter(): void {
+		let self = this;
+		for (let i: number = 1; i <= LogicManager.RANDOM_COUNT; i++) {
+			let item: TetrisItem = self["ranGroup" + i].getChildAt(0);
+			item.canUse = item.state == 0 && self.checkItemAddMap(item);
+		}
 	}
 
 	/** 从地图的一个点出发往右下延伸一块 TetrisItem 矩形区域，这个区域是否存在与给的 TetrisItem 相匹配的形状 */
@@ -431,6 +443,7 @@ class GameMainView extends UI.BaseScene {
 			LogicManager.getInstance.refreshTimes--;
 			self.refreshLabel.text = LogicManager.getInstance.refreshTimes + "";
 			self.randomTetrisItem();
+			self.updataTetrisFilter();
 		} else {
 			MessageManger.getInstance.showText("刷新已经使用完")
 		}

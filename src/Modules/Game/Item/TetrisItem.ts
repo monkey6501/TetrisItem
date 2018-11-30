@@ -89,6 +89,10 @@ class TetrisItem extends eui.Component {
 		}
 	}
 
+	public get canUse(): boolean {
+		let self = this;
+		return self._canUse;
+	}
 	public set canUse(value: boolean) {
 		let self = this;
 		self._canUse = value;

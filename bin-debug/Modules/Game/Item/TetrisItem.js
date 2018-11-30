@@ -88,6 +88,10 @@ var TetrisItem = (function (_super) {
         }
     };
     Object.defineProperty(TetrisItem.prototype, "canUse", {
+        get: function () {
+            var self = this;
+            return self._canUse;
+        },
         set: function (value) {
             var self = this;
             self._canUse = value;
