@@ -31,8 +31,8 @@ const config: ResourceManagerConfig = {
             }
         }
         else if (command == 'publish') {
-            // const outputDir = `bin-release/web/${version}`;
-            const outputDir = `bin-release/web/publish`;
+            const outputDir = `bin-release/web/${version}`;
+            // const outputDir = `bin-release/web/publish`;
             return {
                 outputDir,
                 commands: [

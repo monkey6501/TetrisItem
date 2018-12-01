@@ -174,7 +174,7 @@ var PathManager = (function () {
     Object.defineProperty(PathManager.prototype, "language_path", {
         get: function () {
             var self = this;
-            return self._resourceUrl + "/config/language" + ".txt?v=" + Math.random();
+            return self._resourceUrl + "/config/language" + ".txt";
         },
         enumerable: true,
         configurable: true
@@ -183,9 +183,9 @@ var PathManager = (function () {
         get: function () {
             var self = this;
             return [
-                self._resourceUrl + "default.res.json?v=" + Math.random(),
-                self._resourceUrl + "config/" + "game_com.res.json?v=" + Math.random(),
-                self._resourceUrl + "config/" + "game_ui.res.json?v=" + Math.random(),
+                self._resourceUrl + "default.res.json",
+                self._resourceUrl + "config/" + "game_com.res.json",
+                self._resourceUrl + "config/" + "game_ui.res.json",
             ];
         },
         enumerable: true,

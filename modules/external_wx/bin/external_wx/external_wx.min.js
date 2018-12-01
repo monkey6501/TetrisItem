@@ -12,7 +12,7 @@ var isServerList = true;
 
 function loadServerConfig(callback) {
 	wx.request({
-		url: "./serverConfig.json?v=" + Math.random(),
+		url: "./serverConfig.json",
 		data: {},
 		header: {
 			'content-type': 'application/json' // 默认值

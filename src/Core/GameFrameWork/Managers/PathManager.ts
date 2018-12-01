@@ -111,15 +111,15 @@ class PathManager {
 
 	public get language_path(): string {
 		let self = this;
-		return self._resourceUrl + "/config/language" + ".txt?v=" + Math.random();
+		return self._resourceUrl + "/config/language" + ".txt";
 	}
 
 	public get ConfigUrls(): string[] {
 		let self = this;
 		return [
-			self._resourceUrl + "default.res.json?v=" + Math.random(),
-			self._resourceUrl + "config/" + "game_com.res.json?v=" + Math.random(),
-			self._resourceUrl + "config/" + "game_ui.res.json?v=" + Math.random(),
+			self._resourceUrl + "default.res.json" ,
+			self._resourceUrl + "config/" + "game_com.res.json",
+			self._resourceUrl + "config/" + "game_ui.res.json",
 		];
 	}
 }

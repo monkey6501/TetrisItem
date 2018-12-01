@@ -655,9 +655,9 @@ window.skins={};
 	__extends(GameMainViewSkin, _super);
 	function GameMainViewSkin() {
 		_super.call(this);
-		this.skinParts = ["scoreLabel"];
+		this.skinParts = ["destroyBtn","restartBtn","refreshBtn","scoreLabel","hammerLabel","refreshLabel","mapGroup","ranGroup1","ranGroup2","ranGroup3"];
 		
-		this.elementsContent = [this._Image1_i(),this._Label1_i(),this.scoreLabel_i()];
+		this.elementsContent = [this._Image1_i(),this.destroyBtn_i(),this.restartBtn_i(),this.refreshBtn_i(),this._Label1_i(),this.scoreLabel_i(),this.hammerLabel_i(),this.refreshLabel_i(),this.mapGroup_i(),this.ranGroup1_i(),this.ranGroup2_i(),this.ranGroup3_i()];
 	}
 	var _proto = GameMainViewSkin.prototype;
 
@@ -669,11 +669,35 @@ window.skins={};
 		t.width = 640;
 		return t;
 	};
+	_proto.destroyBtn_i = function () {
+		var t = new eui.Button();
+		this.destroyBtn = t;
+		t.label = "锤子";
+		t.x = 84;
+		t.y = 1054;
+		return t;
+	};
+	_proto.restartBtn_i = function () {
+		var t = new eui.Button();
+		this.restartBtn = t;
+		t.label = "重置";
+		t.x = 274;
+		t.y = 1054;
+		return t;
+	};
+	_proto.refreshBtn_i = function () {
+		var t = new eui.Button();
+		this.refreshBtn = t;
+		t.label = "刷新";
+		t.x = 454;
+		t.y = 1054;
+		return t;
+	};
 	_proto._Label1_i = function () {
 		var t = new eui.Label();
 		t.text = "score:";
 		t.x = 110;
-		t.y = 33;
+		t.y = 63;
 		return t;
 	};
 	_proto.scoreLabel_i = function () {
@@ -681,10 +705,119 @@ window.skins={};
 		this.scoreLabel = t;
 		t.text = "0";
 		t.x = 200;
-		t.y = 35;
+		t.y = 65;
+		return t;
+	};
+	_proto.hammerLabel_i = function () {
+		var t = new eui.Label();
+		this.hammerLabel = t;
+		t.text = "0";
+		t.x = 195;
+		t.y = 1064;
+		return t;
+	};
+	_proto.refreshLabel_i = function () {
+		var t = new eui.Label();
+		this.refreshLabel = t;
+		t.text = "0";
+		t.x = 565;
+		t.y = 1064;
+		return t;
+	};
+	_proto.mapGroup_i = function () {
+		var t = new eui.Group();
+		this.mapGroup = t;
+		t.anchorOffsetX = 0;
+		t.x = 80;
+		t.y = 107;
+		return t;
+	};
+	_proto.ranGroup1_i = function () {
+		var t = new eui.Group();
+		this.ranGroup1 = t;
+		t.anchorOffsetX = 0;
+		t.anchorOffsetY = 0;
+		t.height = 200;
+		t.width = 200;
+		t.x = 0;
+		t.y = 811;
+		t.layout = this._HorizontalLayout1_i();
+		return t;
+	};
+	_proto._HorizontalLayout1_i = function () {
+		var t = new eui.HorizontalLayout();
+		t.horizontalAlign = "center";
+		t.verticalAlign = "middle";
+		return t;
+	};
+	_proto.ranGroup2_i = function () {
+		var t = new eui.Group();
+		this.ranGroup2 = t;
+		t.anchorOffsetX = 0;
+		t.anchorOffsetY = 0;
+		t.height = 200;
+		t.width = 200;
+		t.x = 220;
+		t.y = 811;
+		t.layout = this._HorizontalLayout2_i();
+		return t;
+	};
+	_proto._HorizontalLayout2_i = function () {
+		var t = new eui.HorizontalLayout();
+		t.horizontalAlign = "center";
+		t.verticalAlign = "middle";
+		return t;
+	};
+	_proto.ranGroup3_i = function () {
+		var t = new eui.Group();
+		this.ranGroup3 = t;
+		t.anchorOffsetX = 0;
+		t.anchorOffsetY = 0;
+		t.height = 200;
+		t.width = 200;
+		t.x = 440;
+		t.y = 811;
+		t.layout = this._HorizontalLayout3_i();
+		return t;
+	};
+	_proto._HorizontalLayout3_i = function () {
+		var t = new eui.HorizontalLayout();
+		t.horizontalAlign = "center";
+		t.verticalAlign = "middle";
 		return t;
 	};
 	return GameMainViewSkin;
+})(eui.Skin);generateEUI.paths['resource/gameSkins/game/MapItemSkin.exml'] = window.MapItemSkin = (function (_super) {
+	__extends(MapItemSkin, _super);
+	function MapItemSkin() {
+		_super.call(this);
+		this.skinParts = ["blank","icon"];
+		
+		this.height = 60;
+		this.width = 60;
+		this.elementsContent = [this.blank_i(),this.icon_i()];
+	}
+	var _proto = MapItemSkin.prototype;
+
+	_proto.blank_i = function () {
+		var t = new eui.Image();
+		this.blank = t;
+		t.height = 58;
+		t.horizontalCenter = 0;
+		t.scale9Grid = new egret.Rectangle(3,3,25,25);
+		t.source = "game_json.icon1";
+		t.verticalCenter = 0;
+		t.width = 58;
+		return t;
+	};
+	_proto.icon_i = function () {
+		var t = new eui.Image();
+		this.icon = t;
+		t.source = "game_json.item1";
+		t.visible = false;
+		return t;
+	};
+	return MapItemSkin;
 })(eui.Skin);generateEUI.paths['resource/gameSkins/game/TetrisItemSkin.exml'] = window.TetrisItemSkin = (function (_super) {
 	__extends(TetrisItemSkin, _super);
 	function TetrisItemSkin() {
@@ -707,15 +840,10 @@ window.skins={};
 		_super.call(this);
 		this.skinParts = ["beginBtn"];
 		
-		this.elementsContent = [this._Image1_i(),this.beginBtn_i()];
+		this.elementsContent = [this.beginBtn_i()];
 	}
 	var _proto = LoginViewSkin.prototype;
 
-	_proto._Image1_i = function () {
-		var t = new eui.Image();
-		t.source = "bg_jpg";
-		return t;
-	};
 	_proto.beginBtn_i = function () {
 		var t = new eui.Button();
 		this.beginBtn = t;

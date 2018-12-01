@@ -42,9 +42,9 @@ class Main extends eui.UILayer {
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
 
         self.initData();
-        // ext.loadServerConfig(() => {
+        ext.loadServerConfig(() => {
             self.initPlatform();
-        // })
+        })
     }
 
     /** 初始化数据 */
@@ -74,7 +74,7 @@ class Main extends eui.UILayer {
 
     private initPlatform() {
         let self = this;
-        PathManager.Instance.resourceUrl = "resource/"//ext.getResourceUrl();
+        PathManager.Instance.resourceUrl = ext.getResourceUrl();
         self.loadConfigs();
     }
 

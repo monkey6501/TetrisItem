@@ -10,9 +10,7 @@
 		"libs/modules/game/game.js",
 		"libs/modules/promise/promise.js",
 		"modules/jszip/bin/jszip/jszip.js",
-		"modules/external/bin/external/external.js",
-		"modules/protobuf/library/protobuf-library.js",
-		"modules/protobuf/bundles/protobuf-bundles.js"
+		"modules/external/bin/external/external.js"
 	],
 	"game": [
 		"bin-debug/Core/UIFrameWork/View/BaseView.js",

@@ -3,7 +3,7 @@
   "compilerVersion": "5.2.13",
   "template": {},
   "target": {
-    "current": "wxgame"
+    "current": "web"
   },
   "modules": [
     {
@@ -35,8 +35,8 @@
       "path": "./modules/jszip/"
     },
     {
-      "name": "external_wx",
-      "path": "./modules/external_wx"
+      "name": "external",
+      "path": "./modules/external"
     }
   ]
 }
