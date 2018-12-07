@@ -234,9 +234,9 @@ class GameMainView extends UI.BaseScene {
 		if (LogicManager.getInstance.outOfMap(self.moveItem)) {
 			return false;
 		}
-		// if (self.checkOverlap()) {
-		// 	return false;
-		// }
+		if (self.checkOverlap()) {
+			return false;
+		}
 		return true;
 	}
 

@@ -69,12 +69,34 @@ var GameMainView = (function (_super) {
             }
         }
     };
-    /**通过锤子坐标找到对应的 MapItem */
-    GameMainView.prototype.findItemByHammer = function () {
+    /**
+     * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
+     */
+    GameMainView.prototype.checkMapItem = function (tetris, item) {
+        var self = this;
+        if (self.checkCanShadow()) {
+            var len = tetris.itemList.length;
+            for (var i = 0; i < len; i++) {
+                var len2 = tetris.itemList[i].length;
+                for (var j = 0; j < len2; j++) {
+                    var block = tetris.itemList[i][j];
+                    if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, block.width, block.height, item)) {
+                        self.updataMapItem(item.row, item.col, 2, block.iconColor);
+                        return;
+                    }
+                }
+            }
+        }
+        if (item.state == 2) {
+            self.updataMapItem(item.row, item.col, 0);
+        }
+    };
+    /**通过中心坐标找到对应的 MapItem */
+    GameMainView.prototype.findItemByCenterPos = function (posx, posy) {
         var self = this;
         var item = self.mapItemList[1][1]; //这个item 的x就是item的宽度，y就是item的高度
-        var r = Math.floor(self.hammer.y / item.y);
-        var c = Math.floor(self.hammer.x / item.x);
+        var r = Math.floor(posy / item.y);
+        var c = Math.floor(posx / item.x);
         if (LogicManager.getInstance.betweenTwoNumber(r, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(c, 0, LogicManager.MAP_COL - 1)) {
             return self.mapItemList[r][c];
         }
@@ -229,28 +251,6 @@ var GameMainView = (function (_super) {
         }
         return false;
     };
-    /**
-     * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
-     */
-    GameMainView.prototype.checkMapItem = function (tetris, item) {
-        var self = this;
-        if (self.checkCanShadow()) {
-            var len = tetris.itemList.length;
-            for (var i = 0; i < len; i++) {
-                var len2 = tetris.itemList[i].length;
-                for (var j = 0; j < len2; j++) {
-                    var block = tetris.itemList[i][j];
-                    if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, block.width, block.height, item)) {
-                        self.updataMapItem(item.row, item.col, 2, block.iconColor);
-                        return;
-                    }
-                }
-            }
-        }
-        if (item.state == 2) {
-            self.updataMapItem(item.row, item.col, 0);
-        }
-    };
     GameMainView.prototype.touchBeginHandler = function (e) {
         var self = this;
         self.chooseItem = e.currentTarget.getChildAt(0);
@@ -283,7 +283,7 @@ var GameMainView = (function (_super) {
         if (self.hammer.visible) {
             self.hammer.x = sX - self.offSetX1;
             self.hammer.y = sY - self.offSetY1;
-            self.checkHammerMapItem(self.findItemByHammer());
+            self.checkHammerMapItem(self.findItemByCenterPos(self.hammer.x + self.hammer.width / 2, self.hammer.y + self.hammer.height / 2));
         }
     };
     GameMainView.prototype.touchEndHandler = function () {
