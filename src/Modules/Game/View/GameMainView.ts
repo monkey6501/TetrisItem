@@ -75,12 +75,35 @@ class GameMainView extends UI.BaseScene {
 		}
 	}
 
-	/**通过锤子坐标找到对应的 MapItem */
-	private findItemByHammer(): MapItem {
+	/**
+	 * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
+	 */
+	private checkMapItem(tetris: TetrisItem, item: MapItem): void {
+		let self = this;
+		if (self.checkCanShadow()) {
+			let len: number = tetris.itemList.length;
+			for (let i: number = 0; i < len; i++) {
+				let len2: number = tetris.itemList[i].length;
+				for (let j: number = 0; j < len2; j++) {
+					let block: BlockItem = tetris.itemList[i][j];
+					if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, block.width, block.height, item)) {
+						self.updataMapItem(item.row, item.col, 2, block.iconColor);
+						return;
+					}
+				}
+			}
+		}
+		if (item.state == 2) {
+			self.updataMapItem(item.row, item.col, 0);
+		}
+	}
+
+	/**通过中心坐标找到对应的 MapItem */
+	private findItemByCenterPos(posx: number, posy: number): MapItem {
 		let self = this;
 		let item: MapItem = self.mapItemList[1][1];//这个item 的x就是item的宽度，y就是item的高度
-		let r: number = Math.floor(self.hammer.y / item.y);
-		let c: number = Math.floor(self.hammer.x / item.x);
+		let r: number = Math.floor(posy / item.y);
+		let c: number = Math.floor(posx / item.x);
 		if (LogicManager.getInstance.betweenTwoNumber(r, 0, LogicManager.MAP_ROW - 1) && LogicManager.getInstance.betweenTwoNumber(c, 0, LogicManager.MAP_COL - 1)) {
 			return self.mapItemList[r][c];
 		} else {
@@ -211,9 +234,9 @@ class GameMainView extends UI.BaseScene {
 		if (LogicManager.getInstance.outOfMap(self.moveItem)) {
 			return false;
 		}
-		if (self.checkOverlap()) {
-			return false;
-		}
+		// if (self.checkOverlap()) {
+		// 	return false;
+		// }
 		return true;
 	}
 
@@ -247,28 +270,7 @@ class GameMainView extends UI.BaseScene {
 		return false;
 	}
 
-	/**
-	 * 检测地图小格子与移动的 TetrisItem 中所有的 BlockItem 重叠情况，并更新地图小格子。
-	 */
-	private checkMapItem(tetris: TetrisItem, item: MapItem): void {
-		let self = this;
-		if (self.checkCanShadow()) {
-			let len: number = tetris.itemList.length;
-			for (let i: number = 0; i < len; i++) {
-				let len2: number = tetris.itemList[i].length;
-				for (let j: number = 0; j < len2; j++) {
-					let block: BlockItem = tetris.itemList[i][j];
-					if (LogicManager.getInstance.inTouchArea(block.x + tetris.x, block.y + tetris.y, block.width, block.height, item)) {
-						self.updataMapItem(item.row, item.col, 2, block.iconColor);
-						return;
-					}
-				}
-			}
-		}
-		if (item.state == 2) {
-			self.updataMapItem(item.row, item.col, 0);
-		}
-	}
+	
 
 	private touchBeginHandler(e: egret.TouchEvent): void {
 		let self = this;
@@ -308,7 +310,7 @@ class GameMainView extends UI.BaseScene {
 		if (self.hammer.visible) {
 			self.hammer.x = sX - self.offSetX1;
 			self.hammer.y = sY - self.offSetY1;
-			self.checkHammerMapItem(self.findItemByHammer());
+			self.checkHammerMapItem(self.findItemByCenterPos(self.hammer.x + self.hammer.width / 2, self.hammer.y + self.hammer.height / 2));
 		}
 	}
 
