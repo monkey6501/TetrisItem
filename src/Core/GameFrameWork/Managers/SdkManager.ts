@@ -45,10 +45,10 @@ class SdkManager {
 	}
 
 	/** 数据储存到本地 */
-	public setStorage(value): void {
+	public setStorage(): void {
 		ext.getStorage().then((res) => {
-			if (value > res) {
-				ext.setStorage(value);
+			if (LogicManager.getInstance.score > res) {
+				ext.setStorage(LogicManager.getInstance.score);
 				this.setUserCloudStorage();
 			}
 		})

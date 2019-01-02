@@ -150,7 +150,7 @@ class GameMainView extends UI.BaseScene {
 				let item: MapItem = self.mapItemList[i][j];
 				if (item.state == 2) {
 					LogicManager.getInstance.score++;
-					SdkManager.getInstance.setUserCloudStorage();
+					SdkManager.getInstance.setStorage();
 					self.updataMapItem(i, j, 1, item.color);
 					result = true;
 				}
@@ -206,7 +206,7 @@ class GameMainView extends UI.BaseScene {
 				let col: number = type == 0 ? i : indexList[j];
 				self.updataMapItem(row, col, 0);
 				LogicManager.getInstance.score++;
-				SdkManager.getInstance.setUserCloudStorage();
+				SdkManager.getInstance.setStorage();
 			}
 		}
 
