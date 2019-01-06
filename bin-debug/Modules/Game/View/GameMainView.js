@@ -34,6 +34,7 @@ var GameMainView = (function (_super) {
         self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.addEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
         self.addEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
+        App.TimerManager.doFrame(6, 0, self.traceHandler, self);
     };
     GameMainView.prototype.removeEvents = function () {
         var self = this;
@@ -45,6 +46,16 @@ var GameMainView = (function (_super) {
         self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
         self.removeEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
         self.removeEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
+        App.TimerManager.remove(self.traceHandler, self);
+    };
+    GameMainView.prototype.traceHandler = function () {
+        var self = this;
+        if (self.moveItem.visible) {
+            self.updataMap();
+        }
+        if (self.hammer.visible) {
+            self.checkHammerMapItem(self.findItemByCenterPos(self.hammer.x + self.hammer.width / 2, self.hammer.y + self.hammer.height / 2));
+        }
     };
     GameMainView.prototype.show = function () {
         _super.prototype.show.call(this);
@@ -58,6 +69,7 @@ var GameMainView = (function (_super) {
         self.moveItem.visible = false;
         self.hammerLabel.text = LogicManager.HAMMER_TIMES + "";
         self.refreshLabel.text = LogicManager.REFRESH_TIMES + "";
+        console.log("version 1.0.2");
     };
     /** 出现移动块，更新地图 */
     GameMainView.prototype.updataMap = function () {
@@ -226,25 +238,15 @@ var GameMainView = (function (_super) {
     /** 判断 self.moveItem 与地图上非空点是否有重叠 */
     GameMainView.prototype.checkOverlap = function () {
         var self = this;
-        for (var i = 0; i < LogicManager.MAP_ROW; i++) {
-            for (var j = 0; j < LogicManager.MAP_COL; j++) {
-                var item = self.mapItemList[i][j];
-                if (item.state == 1 && self.checkOverlap2(item)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-    /** 判断 一个MapItem 与 self.moveItem 是否有重叠 */
-    GameMainView.prototype.checkOverlap2 = function (item) {
-        var self = this;
         var len = self.moveItem.itemList.length;
         for (var i = 0; i < len; i++) {
             var len2 = self.moveItem.itemList[i].length;
             for (var j = 0; j < len2; j++) {
                 var block = self.moveItem.itemList[i][j];
-                if (LogicManager.getInstance.inTouchArea(block.x + self.moveItem.x, block.y + self.moveItem.y, block.width, block.height, item)) {
+                var posx = self.moveItem.x + block.x + block.width / 2;
+                var posy = self.moveItem.y + block.y + block.height / 2;
+                var item = self.findItemByCenterPos(posx, posy);
+                if (item.state == 1) {
                     return true;
                 }
             }
@@ -278,12 +280,10 @@ var GameMainView = (function (_super) {
         if (self.moveItem.visible) {
             self.moveItem.x = sX - self.offSetX;
             self.moveItem.y = sY - self.offSetY;
-            self.updataMap();
         }
         if (self.hammer.visible) {
             self.hammer.x = sX - self.offSetX1;
             self.hammer.y = sY - self.offSetY1;
-            self.checkHammerMapItem(self.findItemByCenterPos(self.hammer.x + self.hammer.width / 2, self.hammer.y + self.hammer.height / 2));
         }
     };
     GameMainView.prototype.touchEndHandler = function () {

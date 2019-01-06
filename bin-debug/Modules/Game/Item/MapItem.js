@@ -54,6 +54,10 @@ var MapItem = (function (_super) {
         self.alpha = value != 0 ? 0.5 : 1;
     };
     Object.defineProperty(MapItem.prototype, "state", {
+        /**
+         * icon状态
+         * 0:没被占用不显示  1：被占用显示  2:没被占用显示阴影
+        */
         get: function () {
             var self = this;
             return self._state;

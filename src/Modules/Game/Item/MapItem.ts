@@ -48,6 +48,10 @@ class MapItem extends eui.Component {
 		self.alpha = value != 0 ? 0.5 : 1;
 	}
 
+	/**
+	 * icon状态 
+	 * 0:没被占用不显示  1：被占用显示  2:没被占用显示阴影  
+	*/
 	public get state(): number {
 		let self = this;
 		return self._state;

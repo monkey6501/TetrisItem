@@ -86,9 +86,9 @@ var Main = (function (_super) {
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
         self.initData();
-        ext.loadServerConfig(function () {
-            self.initPlatform();
-        });
+        // ext.loadServerConfig(() => {
+        self.initPlatform();
+        // })
     };
     /** 初始化数据 */
     Main.prototype.initData = function () {
@@ -116,7 +116,8 @@ var Main = (function (_super) {
     };
     Main.prototype.initPlatform = function () {
         var self = this;
-        PathManager.Instance.resourceUrl = ext.getResourceUrl();
+        PathManager.Instance.resourceUrl = "resource/";
+        // PathManager.Instance.resourceUrl = ext.getResourceUrl();
         self.loadConfigs();
     };
     /** 加载配置文件 */

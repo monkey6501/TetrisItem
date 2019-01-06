@@ -36,6 +36,7 @@ class GameMainView extends UI.BaseScene {
 		self.ranGroup3.addEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.addEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
 		self.addEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
+		App.TimerManager.doFrame(6, 0, self.traceHandler, self)
 	}
 
 	public removeEvents(): void {
@@ -48,6 +49,17 @@ class GameMainView extends UI.BaseScene {
 		self.ranGroup3.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, self.touchBeginHandler, self);
 		self.removeEventListener(egret.TouchEvent.TOUCH_END, self.touchEndHandler, self);
 		self.removeEventListener(egret.TouchEvent.TOUCH_MOVE, self.touchMoveHandler, self);
+		App.TimerManager.remove(self.traceHandler, self)
+	}
+
+	private traceHandler(): void {
+		let self = this;
+		if (self.moveItem.visible) {
+			self.updataMap();
+		}
+		if (self.hammer.visible) {
+			self.checkHammerMapItem(self.findItemByCenterPos(self.hammer.x + self.hammer.width / 2, self.hammer.y + self.hammer.height / 2));
+		}
 	}
 
 	public show(): void {
@@ -62,6 +74,7 @@ class GameMainView extends UI.BaseScene {
 		self.moveItem.visible = false;
 		self.hammerLabel.text = LogicManager.HAMMER_TIMES + "";
 		self.refreshLabel.text = LogicManager.REFRESH_TIMES + "";
+		console.log("version 1.0.2")
 	}
 
 	/** 出现移动块，更新地图 */
@@ -243,34 +256,21 @@ class GameMainView extends UI.BaseScene {
 	/** 判断 self.moveItem 与地图上非空点是否有重叠 */
 	private checkOverlap(): boolean {
 		let self = this;
-		for (let i: number = 0; i < LogicManager.MAP_ROW; i++) {
-			for (let j: number = 0; j < LogicManager.MAP_COL; j++) {
-				let item: MapItem = self.mapItemList[i][j];
-				if (item.state == 1 && self.checkOverlap2(item)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/** 判断 一个MapItem 与 self.moveItem 是否有重叠 */
-	private checkOverlap2(item: MapItem): boolean {
-		let self = this;
 		let len: number = self.moveItem.itemList.length;
 		for (let i: number = 0; i < len; i++) {
 			let len2: number = self.moveItem.itemList[i].length;
 			for (let j: number = 0; j < len2; j++) {
 				let block: BlockItem = self.moveItem.itemList[i][j];
-				if (LogicManager.getInstance.inTouchArea(block.x + self.moveItem.x, block.y + self.moveItem.y, block.width, block.height, item)) {
+				let posx: number = self.moveItem.x + block.x + block.width / 2;
+				let posy: number = self.moveItem.y + block.y + block.height / 2;
+				let item: MapItem = self.findItemByCenterPos(posx, posy);
+				if (item.state == 1) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-
-	
 
 	private touchBeginHandler(e: egret.TouchEvent): void {
 		let self = this;
@@ -302,15 +302,15 @@ class GameMainView extends UI.BaseScene {
 		let self = this;
 		var sX: number = e.stageX;
 		var sY: number = e.stageY;
+
 		if (self.moveItem.visible) {
 			self.moveItem.x = sX - self.offSetX;
 			self.moveItem.y = sY - self.offSetY;
-			self.updataMap();
 		}
+
 		if (self.hammer.visible) {
 			self.hammer.x = sX - self.offSetX1;
 			self.hammer.y = sY - self.offSetY1;
-			self.checkHammerMapItem(self.findItemByCenterPos(self.hammer.x + self.hammer.width / 2, self.hammer.y + self.hammer.height / 2));
 		}
 	}
 
