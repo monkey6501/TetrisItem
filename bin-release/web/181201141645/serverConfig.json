@@ -1,8 +1,0 @@
-{
-    "serverConfig": {
-        "configs": {
-            "platform": "dev",
-            "resourceUrl": "resource/"
-        }
-    }
-}
