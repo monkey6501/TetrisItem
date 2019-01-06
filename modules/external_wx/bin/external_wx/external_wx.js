@@ -166,15 +166,33 @@ function getFriendList(callback) {
 
 function setUserCloudStorage(data) {
 	console.log(data);
-	console.log("setUserCloudStorage 上报数据");
 	wx.setUserCloudStorage({
-		KVDataList: [{ key: "a1", value: data + "" }],
+		KVDataList: [{ key: "score", value: data }],
 		success: function (res) {
 		},
 		fail: function (res) {
 		},
 		complete: function (res) {
 		},
+	})
+}
+
+function setStorage(value) {
+	wx.setStorage({
+		key: 'score',
+		data: value
+	})
+}
+
+function getStorage() {
+	new Promise((resolve, reject) => {
+		wx.getStorage({
+			key: 'score',
+			success(res) {
+				console.log(res.data)
+				resolve(res.data);
+			}
+		})
 	})
 }
 
@@ -284,6 +302,8 @@ var ext = (function () {
 	external.hideLoading = hideLoading;
 	external.setKeepScreenOn = setKeepScreenOn;
 	external.createRewardedVideoAd = createRewardedVideoAd;
+	external.setStorage = setStorage;
+	external.getStorage = getStorage;
 	return external;
 })();
 window.ext = ext;

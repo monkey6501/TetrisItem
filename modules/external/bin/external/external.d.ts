@@ -12,5 +12,7 @@ declare class ext {
     static getIsAD(): boolean;
     static getRankUrl(): string;
     static getIsDebug(): boolean;
-
+    static setUserCloudStorage(data);
+    static setStorage(value)
+    static getStorage(): Promise<any>;
 }

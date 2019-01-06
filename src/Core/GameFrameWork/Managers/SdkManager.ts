@@ -35,7 +35,23 @@ class SdkManager {
 	}
 
 	/**上报信息 */
-	public setUserCloudStorage(action: string): void {
+	public setUserCloudStorage(action: string = ""): void {
+		console.log("this.setUserCloudStorage")
+		switch (ext.getPlatform()) {
+			case "wx":
+				ext.setUserCloudStorage(LogicManager.getInstance.score);
+				break;
+		}
+	}
+
+	/** 数据储存到本地 */
+	public setStorage(): void {
+		ext.getStorage().then((res) => {
+			if (LogicManager.getInstance.score > res) {
+				ext.setStorage(LogicManager.getInstance.score);
+				this.setUserCloudStorage();
+			}
+		})
 	}
 
 	/** 观看广告 */
